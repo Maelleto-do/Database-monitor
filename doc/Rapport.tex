@@ -22,7 +22,7 @@ La conversion des entités donne rapidement les premières règles suivantes :\\
 \texttt{Versions(\underline{id\_version}, \#id\_carte, rendu, cote, tirage)} \\
 \texttt{Joueurs(\underline{pseudo}, nom\_joueur, prenom\_joueur)} \\
 \texttt{Possessions(\underline{id\_possession}, \#pseudo, \#id\_version, date\_acquisition, mode\_achat, date\_vente, prix\_vente, etat)} \\
-\texttt{Decks(\underline{id\_deck}, nom\_deck)} \\
+\texttt{Decks(\underline{id\_deck}, nom\_deck, \#pseudo)} \\
 \texttt{Parties(\underline{id\_partie}, date\_partie, lieu\_partie, type\_tournoi, resultat\_partie)} \\
 
 Ensuite, en observant les cardinalités, on se rend compte qu'il est nécessaire de créer les deux relations supplémentaires suivantes. \\
@@ -31,6 +31,20 @@ Ensuite, en observant les cardinalités, on se rend compte qu'il est nécessaire
 \texttt{Appartenance(\underline{id\_possession}, \underline{id\_deck})} \\
 
 \subsection{Contraintes d'intégrité, dépendances fonctionnelles}
+Après l'ajout des contraintes : \\
+\\
+\texttt{Cartes(\underline{id\_carte} [U, NN], titre, description, famille, attaque, defense)} \\
+\texttt{Versions(\underline{id\_version} [U, NN], \#id\_carte [U, NN], rendu, cote, tirage)} \\
+\texttt{Joueurs(\underline{pseudo} [U, NN], nom\_joueur, prenom\_joueur)} \\
+\texttt{Possessions(\underline{id\_possession} [U, NN], \#pseudo [U, NN], date\_acquisition, mode\_achat, date\_vente, prix\_vente, etat)} \\
+\texttt{Decks(\underline{id\_deck} [U, NN], nom\_deck, \#pseudo [U, NN])} \\
+\texttt{Appartenance(\underline{id\_possession} [U, NN], \underline{id\_deck} [U, NN])} \\
+\texttt{Parties(\underline{id\_partie} [U, NN], date\_partie, lieu\_partie, type\_tournoi, resultat\_partie)} \\
+\texttt{Jeu(\underline{id\_partie} [U, NN], \underline{id\_deck} [U, NN], \underline{pseudo} [U, NN])} \\
+
+\textit{Contraintes : U = Unique, NN = Non nul}
+% contrainte pour la table Appartenance : les entités représentées par les clés étrangères #id_possession #id_deck doivent contenir la même clé étrangère #pseudo 
+
 \subsection{Shéma relationnel en $3^e$ forme normale}
 
 \section{Implantation}
