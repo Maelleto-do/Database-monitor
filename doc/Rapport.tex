@@ -1,5 +1,6 @@
 % Waiting for Eloïse report template
 % We need better display
+% Sommaire inherited from projet_SGBD_rendu19.pdf
 
 \documentclass{article}
 \usepackage[french]{babel}
@@ -7,20 +8,38 @@
 
 \begin{document}
 
-\section{Modèle relationnel}
+\section{Modélisation des données}
+\subsection{Description du contexte de l'application}
+\subsection{Modèle entité-association}
+\subsection{Liste des opérations prévues sur la base}
 
-\begin{itemize}
+\section{Schéma relationnel}
+\subsection{Passage au relationnel}
 
+La conversion des entités donne rapidement les premières règles suivantes :\\
+\\
+\texttt{Cartes(\underline{id\_carte}, titre, description, famille, attaque, defense)} \\
+\texttt{Versions(\underline{id\_version}, \#id\_carte, rendu, cote, tirage)} \\
+\texttt{Joueurs(\underline{pseudo}, nom\_joueur, prenom\_joueur)} \\
+\texttt{Possessions(\underline{id\_possession}, \#pseudo, \#id\_version, date\_acquisition, mode\_achat, date\_vente, prix\_vente, etat)} \\
+\texttt{Decks(\underline{id\_deck}, nom\_deck)} \\
+\texttt{Parties(\underline{id\_partie}, date\_partie, lieu\_partie, type\_tournoi, resultat\_partie)} \\
 
-    \item[] Cartes(\underline{id\_carte}, titre, description, famille, attaque, defense) \\
-    \item[] Versions(\underline{id\_version}, \#id\_carte, rendu, cote, tirage) \\
-    \item[] Joueurs(\underline{pseudo}, nom\_joueur, prenom\_joueur) \\
-    \item[] Possessions(\underline{id\_possession}, \#pseudo, \#id\_version, date\_acquisition, mode\_achat, date\_vente, prix\_vente, etat) \\
-    \item[] Decks(\underline{id\_deck}, nom\_deck) \\
-    \item[] Appartenance(\underline{id\_possession}, \underline{id\_deck}) \\
-    \item[] Parties(\underline{id\_partie}, date\_partie, lieu\_partie, type\_tournoi,
-    \item[] resultat\_partie) \\
-    \item[] Jeu(\underline{id\_partie}, \underline{id\_deck}, \underline{pseudo}) \\
+Ensuite, en observant les cardinalités, on se rend compte qu'il est nécessaire de créer les deux relations supplémentaires suivantes. \\
+\\
+\texttt{Jeu(\underline{id\_partie}, \underline{id\_deck}, \underline{pseudo})} \\
+\texttt{Appartenance(\underline{id\_possession}, \underline{id\_deck})} \\
 
-\end{itemize}
+\subsection{Contraintes d'intégrité, dépendances fonctionnelles}
+\subsection{Shéma relationnel en $3^e$ forme normale}
+
+\section{Implantation}
+\subsection{Création de la base de donnée}
+\subsection{Implémentation des commandes SQL}
+
+\section{Utilisation}
+\subsection{Description de l'environnement d'exécution}
+\subsection{Notice d'utilisation}
+\subsection{Description des interfaces éventuelles}
+
 \end{document}
