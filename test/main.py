@@ -3,7 +3,6 @@
 import unittest
 
 class SGBDTest(unittest.TestCase):
-
     """Test d'integration?"""
 
     def test_example(self):
