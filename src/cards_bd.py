@@ -1,12 +1,6 @@
-#!/usr/bin/env python3.7
+#!/usr/bin/env python3
 
-def create_db():
-    """Create the card database"""
-    pass
-
-def drop_db():
-    """Delete the card database"""
-    pass
+# Consultation
 
 def cards_by_type():
     """List cards of a certain type."""
@@ -19,6 +13,8 @@ def cards_not_in_deck():
 def players_collectors():
     """List players that didn't participated in a game."""
     pass
+
+# Statistic
 
 def player_list():
     """List players and the number of cards they own."""
