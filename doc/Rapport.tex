@@ -2,11 +2,46 @@
 % We need better display
 % Sommaire inherited from projet_SGBD_rendu19.pdf
 
-\documentclass{article}
-\usepackage[french]{babel}
+\documentclass[a4paper,10.5pt]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{hyperref}
+
+%pictures
+\usepackage{graphicx}
+
+%maths
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{empheq}
+
+
 
 \begin{document}
+\noindent
+\begin{minipage}{0.20\textwidth}
+\includegraphics[width=\textwidth]{logo}
+\end{minipage}
+\hfill
+\begin{minipage}{0.71\textwidth}
+Système de gestion de Base de Donnée \hfill Nov. 2019\\
+
+\begin{center}
+{\Large \textbf{Projet}}
+
+\vspace{0.5em}
+ \large Melvin \bsc{Even} \quad Pierre \bsc{Pavia} \quad Maëlle \bsc{Toy-Riont-Le-Dosseur} \quad Lucas \bsc{Henry}
+\end{center}\vspace{0.3em}
+
+
+\end{minipage}\\
+
+\noindent
+\rule{\linewidth}{0.5mm}
+\setcounter{section}{1}
 
 \section{Modélisation des données}
 \subsection{Description du contexte de l'application}
@@ -21,7 +56,7 @@ La conversion des entités donne rapidement les premières règles suivantes :\\
 \texttt{Cartes(\underline{id\_carte}, titre, description, famille, attaque, defense)} \\
 \texttt{Versions(\underline{id\_version}, \#id\_carte, rendu, cote, tirage)} \\
 \texttt{Joueurs(\underline{pseudo}, nom\_joueur, prenom\_joueur)} \\
-\texttt{Possessions(\underline{id\_possession}, \#pseudo, \#id\_version, date\_acquisition, mode\_achat, date\_vente, prix\_vente, etat)} \\
+\texttt{Possessions(\underline{id\_possession}, \#pseudo, \#id\_version, date\_acquisition, mode\_achat,\\ date\_vente, prix\_vente, etat)} \\
 \texttt{Decks(\underline{id\_deck}, nom\_deck, \#pseudo)} \\
 \texttt{Parties(\underline{id\_partie}, date\_partie, lieu\_partie, type\_tournoi, resultat\_partie)} \\
 
