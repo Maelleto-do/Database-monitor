@@ -2,16 +2,12 @@
 
 import unittest
 
-
 class SGBDTest(unittest.TestCase):
 
-    """Test case utilisé pour tester les fonctions du projet 'SGBD'."""
+    """Test d'integration?"""
 
     def test_example(self):
-        """Un simple test d'exemple"""
-        always_one = 1
-        self.assertTrue(always_one == 1, "True n'est pas vrai !")
-
+        pass
 
 if __name__ == "__main__":
     unittest.main()
