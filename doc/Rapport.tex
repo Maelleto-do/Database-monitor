@@ -48,6 +48,31 @@ Système de gestion de Base de Donnée \hfill Nov. 2019\\
 \subsection{Modèle entité-association}
 \subsection{Liste des opérations prévues sur la base}
 
+Voici la liste des actions retenues sur la base de donnée~:
+
+Consultation~:
+
+\begin{itemize}
+  \item Liste des cartes d’un certain type.
+  \item Liste des cartes qui ne font partie d’aucun deck.
+  \item La liste des joueurs qui n’ont fait aucune partie (ce sont juste des collectionneurs).
+\end{itemize}
+
+Statistiques~:
+
+\begin{itemize}
+  \item La liste des joueurs, avec le nombre de cartes qu’ils possèdent.
+  \item La liste des joueurs classés par ordre décroissant selon la valeur de
+    leur collection (la valeurd’une carte étant estimée au produit de sa côte
+    par son état).
+  \item La liste des cartes avec le nombre de joueurs qui les utilisent dans
+    leurs decks.
+  \item La liste des joueurs possédant le plus de cartes rares (date
+    d’impression antérieure à 2000 ou tirage inférieur à 100).
+  \item La liste des familles de carte, avec, pour chaque famille, la
+    caractéristique dans laquelle cette famille a le meilleur niveau.
+\end{itemize}
+
 \section{Schéma relationnel}
 \subsection{Passage au relationnel}
 
