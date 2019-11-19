@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+
+def db_execute(conn, sql, args):
+    """Wrapper to execute a command to the database."""
+    with conn.cursor() as cur:
+        cur.execute(sql, args)
+    conn.commit()
+
+
 # Consultation
 
 
