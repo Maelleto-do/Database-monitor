@@ -1,45 +1,59 @@
 #!/usr/bin/env python3
 
-def create_db():
+
+def create_db(conn):
     """Create the card database"""
     pass
 
-def drop_db():
+
+def drop_db(conn):
     """Delete the card database"""
     pass
 
-def add_player():
+
+def add_player(conn):
     pass
 
-def remove_player():
+
+def remove_player(conn):
     pass
 
-def add_deck():
+
+def add_deck(conn):
     pass
 
-def remove_deck():
+
+def remove_deck(conn):
     pass
 
-def add_card():
+
+def add_card(conn):
     pass
 
-def remove_card():
+
+def remove_card(conn):
     pass
 
-def add_card_version():
+
+def add_card_version(conn):
     pass
 
-def remove_card_version():
+
+def remove_card_version(conn):
     pass
 
-def add_possession():
+
+def add_possession(conn):
     pass
 
-def remove_possession():
+
+def remove_possession(conn):
     pass
 
-def add_game():
+
+def add_game(conn):
     pass
 
-def remove_game():
+
+def remove_game(conn):
     pass

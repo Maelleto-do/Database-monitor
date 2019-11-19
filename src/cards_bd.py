@@ -2,36 +2,45 @@
 
 # Consultation
 
-def cards_by_type():
+
+def cards_by_type(conn):
     """List cards of a certain type."""
     pass
 
-def cards_not_in_deck():
+
+def cards_not_in_deck(conn):
     """List cards not in a deck."""
     pass
 
-def players_collectors():
+
+def players_collectors(conn):
     """List players that didn't participated in a game."""
     pass
 
+
 # Statistic
 
-def player_list():
+
+def player_list(conn):
     """List players and the number of cards they own."""
     pass
 
-def players_by_value():
+
+def players_by_value(conn):
     """List player in descending order by the value of their collection."""
     pass
 
-def cards_in_decks():
+
+def cards_in_decks(conn):
     """List cards and the number of players that use them in their decks."""
     pass
 
-def player_rare_collectors():
+
+def player_rare_collectors(conn):
     """List players who own the maximum of rare card."""
     pass
 
-def cards_family():
+
+def cards_family(conn):
     """List card family and the caracteristic in which this family has the best level."""
     pass
