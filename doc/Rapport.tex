@@ -106,13 +106,13 @@ Ensuite, en observant les cardinalités, on se rend compte qu'il est nécessaire
 \subsection{Contraintes d'intégrité, dépendances fonctionnelles}
 Après l'ajout des contraintes : \\
 \\
-\texttt{Cartes(\underline{id\_carte} [U, NN], titre, description, famille, attaque, defense)} \\
-\texttt{Versions(\underline{id\_version} [U, NN], \#id\_carte [U, NN], rendu, cote, tirage)} \\
-\texttt{Joueurs(\underline{pseudo} [U, NN], nom\_joueur, prenom\_joueur)} \\
-\texttt{Possessions(\underline{id\_possession} [U, NN], \#pseudo [U, NN], date\_acquisition, mode\_achat, date\_vente, prix\_vente, etat)} \\
-\texttt{Decks(\underline{id\_deck} [U, NN], nom\_deck, \#pseudo [U, NN])} \\
+\texttt{Cartes(\underline{id\_carte} [U, NN], titre [NN], description [NN], famille [NN], attaque [NN], defense [NN])} \\
+\texttt{Versions(\underline{id\_version} [U, NN], \#id\_carte [U, NN], rendu [NN], cote [NN], tirage [NN])} \\
+\texttt{Joueurs(\underline{pseudo} [U, NN], nom\_joueur [NN], prenom\_joueur [NN])} \\
+\texttt{Possessions(\underline{id\_possession} [U, NN], \#pseudo [U, NN], date\_acquisition [NN], mode\_achat [NN], date\_vente, prix\_vente, etat [NN])} \\
+\texttt{Decks(\underline{id\_deck} [U, NN], nom\_deck [NN], \#pseudo [U, NN])} \\
 \texttt{Appartenance(\underline{id\_possession} [U, NN], \underline{id\_deck} [U, NN])} \\
-\texttt{Parties(\underline{id\_partie} [U, NN], date\_partie, lieu\_partie, type\_tournoi, resultat\_partie)} \\
+\texttt{Parties(\underline{id\_partie} [U, NN], date\_partie [NN], lieu\_partie [NN], type\_tournoi [NN], resultat\_partie [NN])} \\
 \texttt{Jeu(\underline{id\_partie} [U, NN], \underline{id\_deck} [U, NN], \underline{pseudo} [U, NN])} \\
 
 \textit{Contraintes : U = Unique, NN = Non nul}
