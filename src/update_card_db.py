@@ -3,14 +3,15 @@
 import cards_bd
 import logging
 
-def create_db(conn):
-    """Create the card database"""
-    cards_bd.db_execute(conn, cards_bd.sql_src["create_cards_table"])
-    logging.debug("'cartes' table created")
-    cards_bd.db_execute(conn, cards_bd.sql_src["create_cards_table"])
-    logging.debug("'versions' table created")
 
-def drop_db(conn):
+def create_tables(conn):
+    """Create the card database"""
+    for table, sql_req in cards_bd.sql_src["create_table"].items():
+        cards_bd.db_execute(conn, sql_req)
+        logging.debug("'%s' table created", table)
+
+
+def drop_tables(conn):
     """Delete the card database"""
     pass
 

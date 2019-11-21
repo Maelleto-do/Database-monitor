@@ -1,19 +1,64 @@
-create_cards_table: >-
-    CREATE TABLE cartes (
-            id_carte INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            titre TEXT,  
-            description TEXT,
-            famille TEXT,
-            attaque INT,
-            defense INT    
+create_table:
+  cards: >-
+    CREATE TABLE IF NOT EXISTS cartes (
+        id_carte INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        titre TEXT,
+        description TEXT,
+        famille VARCHAR(64),
+        attaque INT,
+        defense INT
     )
-
-create_versions_table: >-
-  CREATE TABLE verions (
-            id_verion INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            id_carte INT,
-            rendu TEXT,
-            cote INT,
-            tirage INT,
-            FOREIGN KEY (id_carte) REFERENCES cartes(id_carte)    
+  versions: >-
+    CREATE TABLE IF NOT EXISTS versions (
+      id_version INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      id_carte INT UNSIGNED,
+      rendu VARCHAR(64),
+      cote INT,
+      tirage INT,
+      FOREIGN KEY (id_carte) REFERENCES cartes(id_carte)
+    )
+  joueurs: >-
+    CREATE TABLE IF NOT EXISTS joueurs (
+      pseudo VARCHAR(64) PRIMARY KEY,
+      nom_joueur VARCHAR(64),
+      prenom_joueur VARCHAR(64)
+    )
+  possessions: >-
+    CREATE TABLE IF NOT EXISTS possessions (
+      id_possession INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      pseudo VARCHAR(64),
+      id_version INT UNSIGNED,
+      date_acquisition DATE,
+      mode_achat VARCHAR(64),
+      date_vente DATE,
+      prix_vente INT,
+      etat VARCHAR(64),
+      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
+      FOREIGN KEY (id_version) REFERENCES versions(id_version)
+    )
+  decks: >-
+    CREATE TABLE IF NOT EXISTS decks (
+      id_deck INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      nom_deck VARCHAR(64),
+      pseudo VARCHAR(64),
+      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo)
+    )
+  parties: >-
+    CREATE TABLE IF NOT EXISTS parties (
+      id_partie INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      date_partie DATE,
+      lieu_partie VARCHAR(64),
+      type_tournoi VARCHAR(64),
+      resultat_partie VARCHAR(64),
+      FOREIGN KEY (resultat_partie) REFERENCES joueurs(pseudo)
+    )
+  jeu: >-
+    CREATE TABLE IF NOT EXISTS jeu (
+      id_partie INT UNSIGNED,
+      id_deck INT UNSIGNED,
+      pseudo VARCHAR(64),
+      FOREIGN KEY (id_partie) REFERENCES parties(id_partie),
+      FOREIGN KEY (id_deck) REFERENCES decks(id_deck),
+      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
+      PRIMARY KEY (id_partie, id_deck, pseudo)
     )

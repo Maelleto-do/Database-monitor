@@ -30,7 +30,7 @@ def main():
     conn = connect_db()
     cards_bd.init()
 
-    update_card_db.create_db(conn)
+    update_card_db.create_tables(conn)
     # print(cards_bd.sql_src)
 
 
