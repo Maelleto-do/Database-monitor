@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import yaml
 
 def db_execute(conn, sql, args):
     """Wrapper to execute a command to the database."""
@@ -7,9 +8,21 @@ def db_execute(conn, sql, args):
         cur.execute(sql, args)
     conn.commit()
 
+def load_commands(commands_file):
+    global sql_src
+    with open(commands_file, 'r') as stream:
+        try:
+            sql_src = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+
+def init():
+    load_commands("sql_src.yaml")
+
+def close():
+    pass
 
 # Consultation
-
 
 def cards_by_type(conn):
     """List cards of a certain type."""

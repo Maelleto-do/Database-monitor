@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
+import cards_bd
+import logging
 
 def create_db(conn):
     """Create the card database"""
-    pass
-
+    cards_bd.db_execute(conn, cards_bd.sql_src["create_cards_table"])
+    logging.debug("'cartes' table created")
+    cards_bd.db_execute(conn, cards_bd.sql_src["create_cards_table"])
+    logging.debug("'versions' table created")
 
 def drop_db(conn):
     """Delete the card database"""

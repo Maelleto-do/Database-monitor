@@ -1,0 +1,19 @@
+create_cards_table: >-
+    CREATE TABLE cartes (
+            id_carte INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            titre TEXT,  
+            description TEXT,
+            famille TEXT,
+            attaque INT,
+            defense INT    
+    )
+
+create_versions_table: >-
+  CREATE TABLE verions (
+            id_verion INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            id_carte INT,
+            rendu TEXT,
+            cote INT,
+            tirage INT,
+            FOREIGN KEY (id_carte) REFERENCES cartes(id_carte)    
+    )
