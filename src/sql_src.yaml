@@ -62,3 +62,12 @@ create_table:
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
       PRIMARY KEY (id_partie, id_deck, pseudo)
     )
+
+drop_table:
+  jeu: "DROP TABLE IF EXISTS jeu"
+  parties: "DROP TABLE IF EXISTS parties"
+  decks: "DROP TABLE IF EXISTS decks"
+  possessions: "DROP TABLE IF EXISTS possessions"
+  joueurs: "DROP TABLE IF EXISTS joueurs"
+  versions: "DROP TABLE IF EXISTS versions"
+  cards: "DROP TABLE IF EXISTS cartes"

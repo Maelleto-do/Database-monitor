@@ -9,9 +9,11 @@ yaml_file = script_dir + "/sql_src.yaml"
 
 def db_execute(conn, sql, args=None):
     """Wrapper to execute a command to the database."""
+    affected_rows = 0
     with conn.cursor() as cur:
-        cur.execute(sql, args)
+        affected_rows = cur.execute(sql, args)
     conn.commit()
+    return affected_rows
 
 
 def load_commands(commands_file):

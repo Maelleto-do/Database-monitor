@@ -13,7 +13,9 @@ def create_tables(conn):
 
 def drop_tables(conn):
     """Delete the card database"""
-    pass
+    for table, sql_req in cards_bd.sql_src["drop_table"].items():
+        cards_bd.db_execute(conn, sql_req)
+        logging.debug("'%s' table dropped", table)
 
 
 def add_player(conn):
