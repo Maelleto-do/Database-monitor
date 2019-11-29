@@ -5,9 +5,8 @@ import os
 import unittest
 import pymysql
 
-# (dev only) add the parent package to PYTHONPATH
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from src import cards_bd
+import cards_bd
+import update_card_db
 
 host = os.environ["DB_HOST"]
 user = os.environ["DB_USER"]
@@ -20,6 +19,7 @@ class TestUpdate(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super(TestUpdate, self).__init__(*args, **kwargs)
+        cards_bd.init()
         self.conn = pymysql.connect(
             host=host,
             user=user,

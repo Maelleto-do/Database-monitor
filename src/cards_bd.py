@@ -6,6 +6,8 @@ import os
 script_dir = os.path.dirname(__file__)
 yaml_file = script_dir + "/sql_src.yaml"
 
+global sql_src
+
 
 def db_execute(conn, sql, args=None):
     """Wrapper to execute a command to the database."""
@@ -13,7 +15,7 @@ def db_execute(conn, sql, args=None):
     with conn.cursor() as cur:
         affected_rows = cur.execute(sql, args)
     conn.commit()
-    return affected_rows
+    return cur
 
 
 def load_commands(commands_file):
