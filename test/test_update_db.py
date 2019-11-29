@@ -69,12 +69,30 @@ class TestUpdate(unittest.TestCase):
         cur = cards_bd.db_execute(self.conn, "SELECT * FROM cartes")
         carte_id = cur.fetchone()["id_carte"]
         update_card_db.remove_card(self.conn, id_card=carte_id)
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM cartes where id_carte = 1")
+        result = cur.fetchall()
+        self.assertEqual(len(result), 0, "Card is not deleted : {}".format(result))
 
     def test_5_add_card_version(self):
-        pass
+        update_card_db.add_card(self.conn, title="Le Roi")
+        cur = cards_bd.db_execute(
+            self.conn, "SELECT * FROM cartes where titre = 'Le Roi'"
+        )
+        carte_id = cur.fetchone()["id_carte"]
+        update_card_db.add_card_version(self.conn, id_carte=carte_id, rendu="Brillant")
+        cur = cards_bd.db_execute(
+            self.conn, "SELECT * FROM versions where id_carte = {}".format(carte_id)
+        )
+        self.assertEqual(
+            cur.fetchone()["rendu"], "Brillant", "La version n'a pas été créée"
+        )
 
     def test_5_remove_card_version(self):
-        pass
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM versions")
+        version_id = cur.fetchone()["id_version"]
+        update_card_db.remove_card_version(self.conn, id_version=version_id)
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM versions")
+        self.assertEqual(len(cur.fetchall()), 0)
 
     def test_6_add_possession(self):
         pass

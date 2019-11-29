@@ -3,6 +3,8 @@
 import cards_bd
 import logging
 
+logging.basicConfig(level=logging.ERROR)
+
 
 def create_tables(conn):
     """Create the card database"""
@@ -47,20 +49,20 @@ def add_card(conn, title, description="", famille="", attaque=0, defense=0):
 
 def remove_card(conn, id_card):
     sql_req = cards_bd.sql_src["remove"]["card"]
+    logging.debug("Removed card '%s'", id_card)
     cards_bd.db_execute(conn, sql_req, id_card)
-    logging.debug("Removed deck '%s'", id_card)
 
 
-def add_card_version(conn):
+def add_card_version(conn, id_carte, rendu="Normal", cote=0, tirage=0):
     sql_req = cards_bd.sql_src["add"]["version"]
-    cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
-    logging.debug("Added deck '%s' for pseudo '%s'", nom_deck, pseudo)
+    cards_bd.db_execute(conn, sql_req, (id_carte, rendu, cote, tirage))
+    logging.debug("Added version '%s' for card %s", rendu, id_carte)
 
 
-def remove_card_version(conn):
+def remove_card_version(conn, id_version):
     sql_req = cards_bd.sql_src["remove"]["version"]
-    cards_bd.db_execute(conn, sql_req, nom_deck)
-    logging.debug("Removed deck '%s'", nom_deck)
+    cards_bd.db_execute(conn, sql_req, id_version)
+    logging.debug("Removed version '%s'", id_version)
 
 
 def add_possession(conn):
