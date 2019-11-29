@@ -18,8 +18,10 @@ def drop_tables(conn):
         logging.debug("'%s' table dropped", table)
 
 
-def add_player(conn):
-    pass
+def add_player(conn, pseudo, nom, prenom):
+    """Add a player in the database"""
+    cards_bd.db_execute(conn, cards_bd.sql_src["insert_player_table"], [pseudo, nom, prenom])
+
 
 
 def remove_player(conn):

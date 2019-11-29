@@ -71,3 +71,6 @@ drop_table:
   joueurs: "DROP TABLE IF EXISTS joueurs"
   versions: "DROP TABLE IF EXISTS versions"
   cards: "DROP TABLE IF EXISTS cartes"
+  
+insert_player_table: >-
+  INSERT INTO joueurs (pseudo, nom_joueur, prenom_joueur) VALUES (%s,%s,%s)

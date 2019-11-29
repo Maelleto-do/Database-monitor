@@ -31,7 +31,9 @@ def main():
     cards_bd.init()
 
     update_card_db.create_tables(conn)
+    update_card_db.add_player(conn, 'totoPeusdo', 'toto', 'tata')
     update_card_db.drop_tables(conn)
+    # print(cards_bd.sql_src)
 
 
 if __name__ == "__main__":

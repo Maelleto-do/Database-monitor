@@ -18,7 +18,7 @@ class TestUpdate(unittest.TestCase):
     """Unit tests for the update request"""
 
     def __init__(self, *args, **kwargs):
-        super(TestUpdate, self).__init__(*args, **kwargs)
+        super(TestUpdate, self).__init__(*args, **kwargs) 
         cards_bd.init()
         self.conn = pymysql.connect(
             host=host,
@@ -36,7 +36,12 @@ class TestUpdate(unittest.TestCase):
         pass
 
     def test_add_player(self):
-        pass
+        update_card_db.add_player(self.conn, "pseudoJoueurTest", "nomJoueurTest", "prenomJoueurTest")
+        sql_req = "SELECT * FROM joueurs"
+        cur = cards_bd.db_execute(self.conn, sql_req)
+        self.assertIn({'pseudo': "pseudoJoueurTest", 'nom_joueur': "nomJoueurTest", 'prenom_joueur': "prenomJoueurTest"}, cur.fetchall())
+    
+        
 
     def test_remove_player(self):
         pass
