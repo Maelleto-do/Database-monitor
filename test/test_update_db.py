@@ -30,7 +30,20 @@ class TestUpdate(unittest.TestCase):
         )
 
     def test_create_db(self):
-        pass
+        update_card_db.create_tables(self.conn)
+        cur = cards_bd.db_execute(self.conn, "DESCRIBE joueurs")
+        self.assertEqual(
+            cur.fetchone(),
+            {
+                "Field": "pseudo",
+                "Type": "varchar(64)",
+                "Null": "NO",
+                "Key": "PRI",
+                "Default": None,
+                "Extra": "",
+            },
+            "Incorrect Initialisation",
+        )
 
     def test_drop_db(self):
         pass
