@@ -2,9 +2,9 @@
 --    delete data (not tables)
 -- ============================================================
 
-delete from JEU ;
-delete from PARTIES ;
-delete from DECKS ;
+delete from games ;
+delete from plays ;
+delete from decks ;
 delete from POSSESSIONS ;
 delete from JOUEURS ;
 delete from VERSIONS ;
