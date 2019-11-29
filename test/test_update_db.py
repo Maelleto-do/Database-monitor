@@ -46,7 +46,9 @@ class TestUpdate(unittest.TestCase):
         )
 
     def test_drop_db(self):
-        pass
+        update_card_db.drop_tables(self.conn)
+        cur = cards_bd.db_execute(self.conn, "SHOW TABLES")
+        assert cur.fetchone() == None, "There are still tables in the database after drop_db call"
 
     def test_add_player(self):
         pass
