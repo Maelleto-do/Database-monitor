@@ -32,7 +32,7 @@ create_table:
       mode_achat VARCHAR(64),
       date_vente DATE,
       prix_vente INT,
-      etat VARCHAR(64),
+      etat INT,
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
       FOREIGN KEY (id_version) REFERENCES versions(id_version)
     )
@@ -44,7 +44,7 @@ create_table:
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo)
     )
   games: >-
-    CREATE TABLE IF NOT EXISTS parties (
+    CREATE TABLE IF NOT EXISTS games (
       id_partie INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
       date_partie DATE,
       lieu_partie VARCHAR(64),
@@ -53,11 +53,11 @@ create_table:
       FOREIGN KEY (resultat_partie) REFERENCES joueurs(pseudo)
     )
   plays: >-
-    CREATE TABLE IF NOT EXISTS jeu (
+    CREATE TABLE IF NOT EXISTS plays (
       id_partie INT UNSIGNED,
       id_deck INT UNSIGNED,
       pseudo VARCHAR(64),
-      FOREIGN KEY (id_partie) REFERENCES parties(id_partie),
+      FOREIGN KEY (id_partie) REFERENCES games(id_partie),
       FOREIGN KEY (id_deck) REFERENCES decks(id_deck),
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
       PRIMARY KEY (id_partie, id_deck, pseudo)
@@ -83,7 +83,7 @@ add:
       pseudo
      ) VALUES(%s, %s)
   card: >-
-    INSERT INTO cards(
+    INSERT INTO cartes(
       titre,
       description,
       famille,
@@ -91,14 +91,14 @@ add:
       defense
     ) VALUES(%s, %s, %s, %s, %s)
   version: >-
-    INSERT INTO version(
+    INSERT INTO versions(
       id_carte,
       rendu,
       cote,
       tirage
     ) VALUES(%s, %s, %s, %s)
   possession: >-
-    INSERT INTO possession(
+    INSERT INTO possessions(
       pseudo,
       id_version,
       date_acquisition,
@@ -123,9 +123,9 @@ add:
 
 remove:
   deck: >-
-    DELETE FROM `decks` WHERE `id_deck`= %s;
+    DELETE FROM `decks` WHERE `nom_deck`= %s;
   card: >-
-    DELETE FROM `cards` WHERE `id_carte`= %s;
+    DELETE FROM `cartes` WHERE `id_carte`= %s;
   version: >-
     DELETE FROM `versions` WHERE `id_version`= %s;
   possession: >-

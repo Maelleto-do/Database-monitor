@@ -34,6 +34,7 @@ def main():
     update_card_db.add_player(conn, 'totoPeusdo', 'toto', 'tata')
     update_card_db.drop_tables(conn)
     # print(cards_bd.sql_src)
+    # update_card_db.drop_tables(conn)
 
 
 if __name__ == "__main__":
