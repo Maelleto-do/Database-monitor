@@ -61,10 +61,14 @@ class TestUpdate(unittest.TestCase):
     def test_4_add_card(self):
         update_card_db.add_card(self.conn, title="Le Roi")
         cur = cards_bd.db_execute(self.conn, "SELECT * FROM cartes")
-        print(cur.fetchall())
+        self.assertEqual(
+            cur.fetchone()["titre"], "Le Roi", "La carte n'est pas 'le Roi'"
+        )
 
     def test_4_remove_card(self):
-        update_card_db.remove_deck(self.conn, nom_deck="Magie")
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM cartes")
+        carte_id = cur.fetchone()["id_carte"]
+        update_card_db.remove_card(self.conn, id_card=carte_id)
 
     def test_5_add_card_version(self):
         pass

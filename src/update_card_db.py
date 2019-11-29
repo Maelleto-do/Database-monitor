@@ -26,41 +26,62 @@ def remove_player(conn):
     pass
 
 
-def add_deck(conn):
-    pass
+def add_deck(conn, nom_deck, pseudo):
+    """Add a deck"""
+    sql_req = cards_bd.sql_src["add"]["deck"]
+    cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
+    logging.debug("Added deck '%s' for pseudo '%s'", nom_deck, pseudo)
 
 
-def remove_deck(conn):
-    pass
+def remove_deck(conn, nom_deck):
+    sql_req = cards_bd.sql_src["remove"]["deck"]
+    cards_bd.db_execute(conn, sql_req, nom_deck)
+    logging.debug("Removed deck '%s'", nom_deck)
 
 
-def add_card(conn):
-    pass
+def add_card(conn, title, description="", famille="", attaque=0, defense=0):
+    sql_req = cards_bd.sql_src["add"]["card"]
+    cards_bd.db_execute(conn, sql_req, (title, description, famille, attaque, defense))
+    logging.debug("Added card '%s'", title)
 
 
-def remove_card(conn):
-    pass
+def remove_card(conn, id_card):
+    sql_req = cards_bd.sql_src["remove"]["card"]
+    cards_bd.db_execute(conn, sql_req, id_card)
+    logging.debug("Removed deck '%s'", id_card)
 
 
 def add_card_version(conn):
-    pass
+    sql_req = cards_bd.sql_src["add"]["version"]
+    cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
+    logging.debug("Added deck '%s' for pseudo '%s'", nom_deck, pseudo)
 
 
 def remove_card_version(conn):
-    pass
+    sql_req = cards_bd.sql_src["remove"]["version"]
+    cards_bd.db_execute(conn, sql_req, nom_deck)
+    logging.debug("Removed deck '%s'", nom_deck)
 
 
 def add_possession(conn):
-    pass
+    sql_req = cards_bd.sql_src["add"]["possession"]
+    cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
+    logging.debug("Added deck '%s' for pseudo '%s'", nom_deck, pseudo)
 
 
 def remove_possession(conn):
-    pass
+    sql_req = cards_bd.sql_src["remove"]["possession"]
+    cards_bd.db_execute(conn, sql_req, nom_deck)
+    logging.debug("Removed possession '%s'", id_deck)
 
 
 def add_game(conn):
-    pass
+    sql_req = cards_bd.sql_src["add"]["game"]
+    cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
+    logging.debug("Added game '%s' for pseudo '%s'", nom_deck, pseudo)
 
 
 def remove_game(conn):
-    pass
+    sql_req = cards_bd.sql_src["remove"]["game"]
+    cards_bd.db_execute(conn, sql_req, nom_deck)
+    logging.debug("Removed game '%s'", nom_deck)
