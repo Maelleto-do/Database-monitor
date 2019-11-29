@@ -4,6 +4,7 @@ import sys
 import os
 import unittest
 import pymysql
+import logging
 
 import cards_bd
 import update_card_db
@@ -29,7 +30,7 @@ class TestUpdate(unittest.TestCase):
             cursorclass=pymysql.cursors.DictCursor,
         )
 
-    def test_create_db(self):
+    def test_1_create_db(self):
         update_card_db.create_tables(self.conn)
         cur = cards_bd.db_execute(self.conn, "DESCRIBE joueurs")
         self.assertEqual(
@@ -45,43 +46,47 @@ class TestUpdate(unittest.TestCase):
             "Incorrect Initialisation",
         )
 
-    def test_drop_db(self):
+    def test_2_add_player(self):
+        pass
+
+    def test_2_remove_player(self):
+        pass
+
+    # def test_3_add_deck(self):
+    #     update_card_db.add_deck(self.conn, nom_deck="Magie", pseudo="Merlin")
+
+    # def test_3_remove_deck(self):
+    #     update_card_db.remove_deck(self.conn, nom_deck="Magie")
+
+    def test_4_add_card(self):
+        update_card_db.add_card(self.conn, title="Le Roi")
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM cartes")
+        print(cur.fetchall())
+
+    def test_4_remove_card(self):
+        update_card_db.remove_deck(self.conn, nom_deck="Magie")
+
+    def test_5_add_card_version(self):
+        pass
+
+    def test_5_remove_card_version(self):
+        pass
+
+    def test_6_add_possession(self):
+        pass
+
+    def test_6_remove_possession(self):
+        pass
+
+    def test_7_add_game(self):
+        pass
+
+    def test_7_remove_game(self):
+        pass
+
+    def test_9_drop_db(self):
         update_card_db.drop_tables(self.conn)
         cur = cards_bd.db_execute(self.conn, "SHOW TABLES")
-        assert cur.fetchone() == None, "There are still tables in the database after drop_db call"
-
-    def test_add_player(self):
-        pass
-
-    def test_remove_player(self):
-        pass
-
-    def test_add_deck(self):
-        pass
-
-    def test_remove_deck(self):
-        pass
-
-    def test_add_card(self):
-        pass
-
-    def test_remove_card(self):
-        pass
-
-    def test_add_card_version(self):
-        pass
-
-    def test_remove_card_version(self):
-        pass
-
-    def test_add_possession(self):
-        pass
-
-    def test_remove_possession(self):
-        pass
-
-    def test_add_game(self):
-        pass
-
-    def test_remove_game(self):
-        pass
+        assert (
+            cur.fetchone() == None
+        ), "There are still tables in the database after drop_db call"
