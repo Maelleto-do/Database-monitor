@@ -43,7 +43,7 @@ create_table:
       pseudo VARCHAR(64),
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo)
     )
-  parties: >-
+  games: >-
     CREATE TABLE IF NOT EXISTS parties (
       id_partie INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
       date_partie DATE,
@@ -52,7 +52,7 @@ create_table:
       resultat_partie VARCHAR(64),
       FOREIGN KEY (resultat_partie) REFERENCES joueurs(pseudo)
     )
-  jeu: >-
+  plays: >-
     CREATE TABLE IF NOT EXISTS jeu (
       id_partie INT UNSIGNED,
       id_deck INT UNSIGNED,
@@ -64,8 +64,8 @@ create_table:
     )
 
 drop_table:
-  jeu: "DROP TABLE IF EXISTS jeu"
-  parties: "DROP TABLE IF EXISTS parties"
+  jeu: "DROP TABLE IF EXISTS plays"
+  parties: "DROP TABLE IF EXISTS games"
   decks: "DROP TABLE IF EXISTS decks"
   possessions: "DROP TABLE IF EXISTS possessions"
   joueurs: "DROP TABLE IF EXISTS joueurs"
@@ -74,3 +74,63 @@ drop_table:
   
 insert_player_table: >-
   INSERT INTO joueurs (pseudo, nom_joueur, prenom_joueur) VALUES (%s,%s,%s)
+
+
+add:
+  deck: >-
+    INSERT INTO decks(
+      nom_deck,
+      pseudo
+     ) VALUES(%s, %s)
+  card: >-
+    INSERT INTO cards(
+      titre,
+      description,
+      famille,
+      attaque,
+      defense
+    ) VALUES(%s, %s, %s, %s, %s)
+  version: >-
+    INSERT INTO version(
+      id_carte,
+      rendu,
+      cote,
+      tirage
+    ) VALUES(%s, %s, %s, %s)
+  possession: >-
+    INSERT INTO possession(
+      pseudo,
+      id_version,
+      date_acquisition,
+      mode_achat,
+      date_vente,
+      prix_vente,
+      etat
+    ) VALUES(%s, %s, %s, %s, %s, %s, %s)
+  play: >-
+    INSERT INTO plays(
+    id_partie,
+    id_deck,
+    pseudo
+    ) VALUES(%s, %s, %s)
+  game: >-
+    INSERT INTO games(
+      date_partie,
+      lieu_partie,
+      type_tournoi,
+      resultat_partie
+    ) VALUES(%s, %s, %s, %s)
+
+remove:
+  deck: >-
+    DELETE FROM `decks` WHERE `id_deck`= %s;
+  card: >-
+    DELETE FROM `cards` WHERE `id_carte`= %s;
+  version: >-
+    DELETE FROM `versions` WHERE `id_version`= %s;
+  possession: >-
+    DELETE FROM `possessions` WHERE `id_possession`= %s;
+  play: >-
+    DELETE FROM `plays` WHERE `id_deck`= %s;
+  game: >-
+    DELETE FROM `games` WHERE `id_deck`= %s;
