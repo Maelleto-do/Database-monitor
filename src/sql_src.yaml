@@ -32,7 +32,7 @@ create_table:
       mode_achat VARCHAR(64),
       date_vente DATE,
       prix_vente INT,
-      etat VARCHAR(64),
+      etat INT,
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
       FOREIGN KEY (id_version) REFERENCES versions(id_version)
     )

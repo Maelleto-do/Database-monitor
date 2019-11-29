@@ -31,7 +31,7 @@ def main():
     cards_bd.init()
 
     update_card_db.create_tables(conn)
-    update_card_db.drop_tables(conn)
+    # update_card_db.drop_tables(conn)
 
 
 if __name__ == "__main__":
