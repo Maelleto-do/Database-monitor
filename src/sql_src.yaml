@@ -74,6 +74,7 @@ create_table:
 drop_table:
   jeu: "DROP TABLE IF EXISTS plays"
   parties: "DROP TABLE IF EXISTS games"
+  affiliations: "DROP TABLE IF EXISTS affiliations"
   decks: "DROP TABLE IF EXISTS decks"
   possessions: "DROP TABLE IF EXISTS possessions"
   joueurs: "DROP TABLE IF EXISTS joueurs"
