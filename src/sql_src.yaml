@@ -43,6 +43,14 @@ create_table:
       pseudo VARCHAR(64),
       FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo)
     )
+  affiliations: >- 
+    CREATE TABLE IF NOT EXISTS affiliations (
+      id_possession INT UNSIGNED,
+      id_deck INT UNSIGNED, 
+      CONSTRAINT affiliations_pk PRIMARY KEY (id_possession, id_deck),
+      FOREIGN KEY (id_possession) REFERENCES possessions(id_possession),
+      FOREIGN KEY (id_deck) REFERENCES decks(id_deck)
+    )
   games: >-
     CREATE TABLE IF NOT EXISTS games (
       id_partie INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
