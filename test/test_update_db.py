@@ -69,11 +69,19 @@ class TestUpdate(unittest.TestCase):
         cur = cards_bd.db_execute(self.conn, sql_req)
         self.assertNotIn({"pseudo": "pseudoJoueurTest"}, cur.fetchall())
 
-    # def test_3_add_deck(self):
-    #     update_card_db.add_deck(self.conn, nom_deck="Magie", pseudo="Merlin")
+    def test_3_add_deck(self):
+        update_card_db.add_player(self.conn, "Merlin", "Merlin", "L'enchanteur")
+        update_card_db.add_deck(self.conn, deck_name="Magie", pseudo="Merlin")
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM decks")
+        self.assertEqual(
+            cur.fetchone()["deck_name"], "Magie", "Le deck n'a pas été créé"
+        )
 
-    # def test_3_remove_deck(self):
-    #     update_card_db.remove_deck(self.conn, nom_deck="Magie")
+    def test_3_remove_deck(self):
+        update_card_db.remove_deck(self.conn, "Magie")
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM decks")
+        result = cur.fetchall()
+        self.assertEqual(len(result), 0, "Card is not deleted : {}".format(result))
 
     def test_4_add_card(self):
         update_card_db.add_card(self.conn, title="Le Roi")

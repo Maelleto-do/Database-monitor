@@ -33,11 +33,11 @@ def remove_player(conn, pseudo):
     cards_bd.db_execute(conn, sql_req, pseudo)
 
 
-def add_deck(conn, nom_deck, pseudo):
+def add_deck(conn, deck_name, pseudo):
     """Add a deck"""
     sql_req = cards_bd.sql_src["add"]["deck"]
-    cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
-    logging.debug("Added deck '%s' for pseudo '%s'", nom_deck, pseudo)
+    cards_bd.db_execute(conn, sql_req, (deck_name, pseudo))
+    logging.debug("Added deck '%s' for pseudo '%s'", deck_name, pseudo)
 
 
 def remove_deck(conn, nom_deck):

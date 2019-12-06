@@ -86,7 +86,7 @@ add:
     INSERT INTO players (pseudo, player_name, player_first_name) VALUES (%s,%s,%s)
   deck: >-
     INSERT INTO decks(
-      nom_deck,
+      deck_name,
       pseudo
      ) VALUES(%s, %s)
   card: >-
@@ -132,7 +132,7 @@ remove:
   player: >-
     DELETE FROM players WHERE pseudo = %s;
   deck: >-
-    DELETE FROM `decks` WHERE `nom_deck`= %s;
+    DELETE FROM `decks` WHERE `deck_name`= %s;
   card: >-
     DELETE FROM `cards` WHERE `id_card`= %s;
   version: >-
