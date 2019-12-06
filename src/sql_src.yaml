@@ -1,148 +1,146 @@
 create_table:
   cards: >-
-    CREATE TABLE IF NOT EXISTS cartes (
-        id_carte INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        titre TEXT,
+    CREATE TABLE IF NOT EXISTS cards (
+        id_card INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        title TEXT,
         description TEXT,
-        famille VARCHAR(64),
-        attaque INT,
+        familly VARCHAR(64),
+        attack INT,
         defense INT
     )
   versions: >-
     CREATE TABLE IF NOT EXISTS versions (
       id_version INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-      id_carte INT UNSIGNED,
-      rendu VARCHAR(64),
-      cote INT,
-      tirage INT,
-      FOREIGN KEY (id_carte) REFERENCES cartes(id_carte)
+      id_card INT UNSIGNED,
+      rendering VARCHAR(64),
+      rating INT,
+      print_run INT,
+      FOREIGN KEY (id_card) REFERENCES cards(id_card)
     )
-  joueurs: >-
-    CREATE TABLE IF NOT EXISTS joueurs (
+  players: >-
+    CREATE TABLE IF NOT EXISTS players (
       pseudo VARCHAR(64) PRIMARY KEY,
-      nom_joueur VARCHAR(64),
-      prenom_joueur VARCHAR(64)
+      player_name VARCHAR(64),
+      player_first_name VARCHAR(64)
     )
   possessions: >-
     CREATE TABLE IF NOT EXISTS possessions (
       id_possession INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
       pseudo VARCHAR(64),
       id_version INT UNSIGNED,
-      date_acquisition DATE,
-      mode_achat VARCHAR(64),
-      date_vente DATE,
-      prix_vente INT,
-      etat INT,
-      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
+      purchase_date DATE,
+      purchase_mode VARCHAR(64),
+      sale_date DATE,
+      sale_price INT,
+      state INT,
+      FOREIGN KEY (pseudo) REFERENCES players(pseudo),
       FOREIGN KEY (id_version) REFERENCES versions(id_version)
     )
   decks: >-
     CREATE TABLE IF NOT EXISTS decks (
       id_deck INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-      nom_deck VARCHAR(64),
+      deck_name VARCHAR(64),
       pseudo VARCHAR(64),
-      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo)
+      FOREIGN KEY (pseudo) REFERENCES players(pseudo)
     )
-  affiliations: >- 
-    CREATE TABLE IF NOT EXISTS affiliations (
+  memberships: >-
+    CREATE TABLE IF NOT EXISTS memberships (
       id_possession INT UNSIGNED,
-      id_deck INT UNSIGNED, 
-      CONSTRAINT affiliations_pk PRIMARY KEY (id_possession, id_deck),
+      id_deck INT UNSIGNED,
+      CONSTRAINT membership_pk PRIMARY KEY (id_possession, id_deck),
       FOREIGN KEY (id_possession) REFERENCES possessions(id_possession),
       FOREIGN KEY (id_deck) REFERENCES decks(id_deck)
     )
   games: >-
     CREATE TABLE IF NOT EXISTS games (
-      id_partie INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-      date_partie DATE,
-      lieu_partie VARCHAR(64),
-      type_tournoi VARCHAR(64),
-      resultat_partie VARCHAR(64),
-      FOREIGN KEY (resultat_partie) REFERENCES joueurs(pseudo)
+      id_game INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      game_date DATE,
+      game_location VARCHAR(64),
+      tournament_type VARCHAR(64),
+      game_results VARCHAR(64),
+      FOREIGN KEY (game_results) REFERENCES players(pseudo)
     )
   plays: >-
     CREATE TABLE IF NOT EXISTS plays (
-      id_partie INT UNSIGNED,
+      id_game INT UNSIGNED,
       id_deck INT UNSIGNED,
       pseudo VARCHAR(64),
-      FOREIGN KEY (id_partie) REFERENCES games(id_partie),
+      FOREIGN KEY (id_game) REFERENCES games(id_game),
       FOREIGN KEY (id_deck) REFERENCES decks(id_deck),
-      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
-      PRIMARY KEY (id_partie, id_deck, pseudo)
+      FOREIGN KEY (pseudo) REFERENCES players(pseudo),
+      PRIMARY KEY (id_game, id_deck, pseudo)
     )
 
 drop_table:
   jeu: "DROP TABLE IF EXISTS plays"
-  parties: "DROP TABLE IF EXISTS games"
-  affiliations: "DROP TABLE IF EXISTS affiliations"
+  games: "DROP TABLE IF EXISTS games"
+  memberships: "DROP TABLE IF EXISTS memberships"
   decks: "DROP TABLE IF EXISTS decks"
   possessions: "DROP TABLE IF EXISTS possessions"
-  joueurs: "DROP TABLE IF EXISTS joueurs"
+  joueurs: "DROP TABLE IF EXISTS players"
   versions: "DROP TABLE IF EXISTS versions"
-  cards: "DROP TABLE IF EXISTS cartes"
-  
-insert_player: >-
-  INSERT INTO joueurs (pseudo, nom_joueur, prenom_joueur) VALUES (%s,%s,%s)
-
-remove_player: >-
-  DELETE FROM joueurs WHERE pseudo = %s;
+  cards: "DROP TABLE IF EXISTS cards"
 
 add:
+  player: >-
+    INSERT INTO players (pseudo, player_name, player_first_name) VALUES (%s,%s,%s)
   deck: >-
     INSERT INTO decks(
-      nom_deck,
+      deck_name,
       pseudo
      ) VALUES(%s, %s)
   card: >-
-    INSERT INTO cartes(
-      titre,
+    INSERT INTO cards(
+      title,
       description,
-      famille,
-      attaque,
+      familly,
+      attack,
       defense
     ) VALUES(%s, %s, %s, %s, %s)
   version: >-
     INSERT INTO versions(
-      id_carte,
-      rendu,
-      cote,
-      tirage
+      id_card,
+      rendering,
+      rating,
+      print_run
     ) VALUES(%s, %s, %s, %s)
   possession: >-
     INSERT INTO possessions(
       pseudo,
       id_version,
-      date_acquisition,
-      mode_achat,
-      date_vente,
-      prix_vente,
-      etat
+      purchase_date,
+      purchase_mode,
+      sale_date,
+      sale_price,
+      state
     ) VALUES(%s, %s, %s, %s, %s, %s, %s)
   play: >-
     INSERT INTO plays(
-    id_partie,
+    id_game,
     id_deck,
     pseudo
     ) VALUES(%s, %s, %s)
   game: >-
     INSERT INTO games(
-      date_partie,
-      lieu_partie,
-      type_tournoi,
-      resultat_partie
+      game_date,
+      game_location,
+      tournament_type,
+      game_results
     ) VALUES(%s, %s, %s, %s)
 
 remove:
+  player: >-
+    DELETE FROM players WHERE pseudo = %s;
   deck: >-
-    DELETE FROM `decks` WHERE `nom_deck`= %s;
+    DELETE FROM `decks` WHERE `deck_name`= %s;
   card: >-
-    DELETE FROM `cartes` WHERE `id_carte`= %s;
+    DELETE FROM `cards` WHERE `id_card`= %s;
   version: >-
     DELETE FROM `versions` WHERE `id_version`= %s;
   possession: >-
     DELETE FROM `possessions` WHERE `id_possession`= %s;
   play: >-
-    DELETE FROM `plays` WHERE `id_deck`= %s;
+    DELETE FROM `plays` WHERE `id_play`= %s;
   game: >-
     DELETE FROM `games` WHERE `id_deck`= %s;
 
@@ -153,3 +151,4 @@ player_list: >-
   FROM `versions`, `possessions` 
   WHERE possessions.id_version = versions.id_version
   group by id_carte;
+
