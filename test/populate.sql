@@ -2,9 +2,9 @@
 --    delete data (not tables)
 -- ============================================================
 
-delete from games ;
-delete from plays ;
-delete from decks ;
+delete from GAMES ;
+delete from PLAYS ;
+delete from DECKS ;
 delete from POSSESSIONS ;
 delete from JOUEURS ;
 delete from VERSIONS ;
@@ -73,6 +73,7 @@ commit ;
 -- POSSESSIONS 
 
 alter table POSSESSIONS AUTO_INCREMENT = 1;
+
 insert into POSSESSIONS values (NULL, 'Matodo', 1, '2019-09-28', 'NEUF', NULL, NULL, 90) ;
 insert into POSSESSIONS values (NULL, 'Matodo', 6, '2019-02-12', 'NEUF', '2019-06-08', 9, 96) ;
 insert into POSSESSIONS values (NULL, 'Matodo', 4, '2019-09-28', 'NEUF', NULL, NULL, 90) ;
@@ -80,6 +81,25 @@ insert into POSSESSIONS values (NULL, 'Matodo', 17, '2019-09-28', 'OCCASION', NU
 insert into POSSESSIONS values (NULL, 'Matodo', 10, '2019-09-28', 'OCCASION', NULL, NULL, 70) ;
 insert into POSSESSIONS values (NULL, 'Matodo', 11, '2019-09-28', 'NEUF', NULL, NULL, 70) ;
 insert into POSSESSIONS values (NULL, 'Matodo', 14, '2019-01-01', 'OCCASION', '2019-04-6', -1, 20) ;
+
+insert into POSSESSIONS values (NULL, 'Boytus', 1, '2019-04-18', 'NEUF', NULL, NULL, 70) ;
+insert into POSSESSIONS values (NULL, 'Boytus', 6, '2019-01-13', 'OCCASION', '2019-04-19', 4, 56) ;
+insert into POSSESSIONS values (NULL, 'Boytus', 4, '2019-05-25', 'NEUF', NULL, NULL, 80) ;
+insert into POSSESSIONS values (NULL, 'Boytus', 17, '2019-03-03', 'OCCASION', NULL, NULL, 10) ;
+
+insert into POSSESSIONS values (NULL, 'Toastation', 1, '2019-04-12', 'NEUF', NULL, NULL, 90) ;
+insert into POSSESSIONS values (NULL, 'Toastation', 6, '2019-02-16', 'OCCASION', '2019-04-19', 4, 96) ;
+insert into POSSESSIONS values (NULL, 'Toastation', 18, '2019-01-15', 'NEUF', NULL, NULL, 90) ;
+insert into POSSESSIONS values (NULL, 'Toastation', 9, '2019-02-03', 'OCCASION', '2019-11-28', -1, 40) ;
+insert into POSSESSIONS values (NULL, 'Toastation', 2, '2019-02-03', 'OCCASION', '2019-11-28', -1, 40) ;
+
+insert into POSSESSIONS values (NULL, 'Gouvernathor', 1, '2019-04-12', 'NEUF', NULL, NULL, 90) ;
+insert into POSSESSIONS values (NULL, 'Gouvernathor', 3, '2019-02-16', 'OCCASION', '2019-04-19', 4, 96) ;
+insert into POSSESSIONS values (NULL, 'Gouvernathor', 3, '2019-01-15', 'NEUF', NULL, NULL, 90) ;
+insert into POSSESSIONS values (NULL, 'Gouvernathor', 11, '2019-02-03', 'OCCASION', '2019-11-28', -1, 40) ;
+insert into POSSESSIONS values (NULL, 'Gouvernathor', 12, '2019-02-03', 'OCCASION', '2019-6-28', -1, 40) ;
+
+-- DECKS
 
 
 -- -- ============================================================
@@ -89,4 +109,6 @@ insert into POSSESSIONS values (NULL, 'Matodo', 14, '2019-01-01', 'OCCASION', '2
 select count(*),'= 14 ?','ACTEUR' from CARTES 
 union
 select count(*),'= 19 ?','FILM' from VERSIONS 
+union 
+select count(*),'= 4 ?','FILM' from JOUEURS
 commit ; 
