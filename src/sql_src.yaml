@@ -72,9 +72,11 @@ drop_table:
   versions: "DROP TABLE IF EXISTS versions"
   cards: "DROP TABLE IF EXISTS cartes"
   
-insert_player_table: >-
+insert_player: >-
   INSERT INTO joueurs (pseudo, nom_joueur, prenom_joueur) VALUES (%s,%s,%s)
 
+remove_player: >-
+  DELETE FROM joueurs WHERE pseudo = %s;
 
 add:
   deck: >-

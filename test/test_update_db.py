@@ -46,13 +46,17 @@ class TestUpdate(unittest.TestCase):
             "Incorrect Initialisation",
         )
 
-
-    def  test_2_add_player(self):
+    def test_2_add_player(self):
         update_card_db.add_player(self.conn, "pseudoJoueurTest", "nomJoueurTest", "prenomJoueurTest")
         sql_req = "SELECT * FROM joueurs"
         cur = cards_bd.db_execute(self.conn, sql_req)
         self.assertIn({'pseudo': "pseudoJoueurTest", 'nom_joueur': "nomJoueurTest", 'prenom_joueur': "prenomJoueurTest"}, cur.fetchall())
-    
+
+    def test_delete_player(self):
+        update_card_db.remove_player(self.conn, "pseudoJoueurTest")
+        sql_req = "SELECT * FROM joueurs"
+        cur = cards_bd.db_execute(self.conn, sql_req)
+        self.assertNotIn( {'pseudo': "pseudoJoueurTest"}, cur.fetchall() )
 
     def test_2_remove_player(self):
         pass
