@@ -1,57 +1,23 @@
-#!/usr/bin/env python3.7
+#!/usr/bin/env python3
 
 import cmd
 import cards_bd
 import update_card_db
 import pymysql
 import os
-
-
-def add_(conn):
-    print("not implemented")
-
-
-def remove_(conn):
-    print("not implemented")
-
-
-def add_card(conn):
-    title = shell_input("Card title (Required): ", True)
-    description = shell_input("Card description: ")
-    familly = shell_input("Card familly: ")
-    attack = shell_input("Card attack: ")
-    defense = shell_input("Card defense: ")
-    attack = attack if attack else None
-    defense = defense if defense else None
-    update_card_db.add_card(conn, title, description, familly, attack, defense)
-
-
-def add_player(conn):
-    pseudo = shell_input("Player pseudo (Required): ", True)
-    name = shell_input("Player name: ")
-    first_name = shell_input("Player first name: ")
-    update_card_db.add_player(conn, pseudo, name, first_name)
-
-
-def add_deck(conn):
-    deck_name = shell_input("Deck name (Required): ", True)
-    pseudo = shell_input("Deck owner (Required): ", True)
-    update_card_db.add_deck(conn, deck_name, pseudo)
-
-
-def shell_input(message=None, required=False):
-    return input(message)
+import shell_add as sa
+import shell_remove as sr
 
 
 tables = [
-    {"name": "card", "add": add_card, "remove": remove_},
-    {"name": "player", "add": add_player, "remove": remove_},
-    {"name": "version", "add": add_, "remove": remove_},
-    {"name": "possession", "add": add_, "remove": remove_},
-    {"name": "deck", "add": add_deck, "remove": remove_},
-    {"name": "membership", "add": add_, "remove": remove_},
-    {"name": "game", "add": add_, "remove": remove_},
-    {"name": "play", "add": add_, "remove": remove_},
+    {"name": "card", "add": sa.add_card, "remove": sr.remove_card},
+    {"name": "player", "add": sa.add_player, "remove": sr.remove_player},
+    {"name": "version", "add": sa.add_version, "remove": sr.remove_version},
+    {"name": "possession", "add": sa.add_possession, "remove": sr.remove_possession},
+    {"name": "deck", "add": sa.add_deck, "remove": sr.remove_deck},
+    {"name": "membership", "add": sa.add_, "remove": sr.remove_},
+    {"name": "game", "add": sa.add_game, "remove": sr.remove_game},
+    {"name": "play", "add": sa.add_play, "remove": sr.remove_play},
 ]
 
 host = os.environ["DB_HOST"]
@@ -91,17 +57,22 @@ class SqlShell(cmd.Cmd):
         else:
             print("\nChoose one of this:")
             for table in tables:
-                print(" - {}".format(table["name"][:-1]))
+                print(" - {}".format(table["name"]))
             print()
 
     def do_remove(self, arg):
         "Remove an element"
         if arg:
-            print("not implemented")
+            table = arg.split(" ")[0]
+            if table in [t["name"] for t in tables]:
+                t_dict = [t for t in tables if t["name"] == table][0]
+                t_dict["remove"](self.conn)
+            else:
+                print("Error: table '{}' is not valid".format(table))
         else:
             print("\nChoose one of this:")
             for table in tables:
-                print(" - {}".format(table["name"][:-1]))
+                print(" - {}".format(table["name"]))
             print()
 
     def do_list(self, arg):
@@ -110,14 +81,24 @@ class SqlShell(cmd.Cmd):
             table = arg.split(" ")[0]
             if table[:-1] in [t["name"] for t in tables]:
                 cur = cards_bd.db_execute(self.conn, cards_bd.sql_src["list"][table])
-                for res in cur.fetchall():
-                    print(res)
+                result = cur.fetchall()
+                if result:
+                    for key in result[0]:
+                        print("{:^10s}".format(key), end="|")
+                    print()
+                    for res in result:
+                        for item in res.values():
+                            print(
+                                "{:^10s}".format(str(item) if item else "None"),
+                                end="|",
+                            )
+                        print()
             else:
                 print("Error: table '{}' is not valid".format(table))
         else:
             print("\nSyntax:\n\t`list <table>`\nwhere <table> is one of this:")
             for table in tables:
-                print(" - {}s".format(table["name"][:-1]))
+                print(" - {}s".format(table["name"]))
             print()
 
     def do_consult(self, arg):
@@ -127,6 +108,9 @@ class SqlShell(cmd.Cmd):
     def do_statistics(self, arg):
         "Statistics"
         print("Statistics")
+
+    def emptyline(self):
+        pass
 
     def do_quit(self, arg):
         print("Close")
