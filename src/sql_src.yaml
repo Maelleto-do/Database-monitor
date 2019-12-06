@@ -81,6 +81,16 @@ drop_table:
   versions: "DROP TABLE IF EXISTS versions"
   cards: "DROP TABLE IF EXISTS cards"
 
+list:
+  plays: "SELECT * FROM plays"
+  games: "SELECT * FROM games"
+  memberships: "SELECT * FROM memberships"
+  decks: "SELECT * FROM decks"
+  possessions: "SELECT * FROM possessions"
+  players: "SELECT * FROM players"
+  versions: "SELECT * FROM versions"
+  cards: "SELECT * FROM cards"
+
 add:
   player: >-
     INSERT INTO players (pseudo, player_name, player_first_name) VALUES (%s,%s,%s)
