@@ -83,16 +83,26 @@ class SqlShell(cmd.Cmd):
                 cur = cards_bd.db_execute(self.conn, cards_bd.sql_src["list"][table])
                 result = cur.fetchall()
                 if result:
+                    print("\n+", end="")
                     for key in result[0]:
-                        print("{:^10s}".format(key), end="|")
-                    print()
+                        print("{:-^15}".format(""), end="+")
+                    print("\n|", end="")
+                    for key in result[0]:
+                        print("{:^15.15}".format(key), end="|")
+                    print("\n+", end="")
+                    for key in result[0]:
+                        print("{:-^15}".format(""), end="+")
                     for res in result:
+                        print("\n|", end="")
                         for item in res.values():
                             print(
-                                "{:^10s}".format(str(item) if item else "None"),
+                                "{:^15.15}".format(str(item) if item else "None"),
                                 end="|",
                             )
-                        print()
+                    print("\n+", end="")
+                    for key in result[0]:
+                        print("{:-^15}".format(""), end="+")
+                    print("\n")
             else:
                 print("Error: table '{}' is not valid".format(table))
         else:
