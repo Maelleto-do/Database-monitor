@@ -113,7 +113,8 @@ class SqlShell(cmd.Cmd):
         pass
 
     def do_quit(self, arg):
-        print("Close")
+        self.conn.close()
+        exit()
 
 
 if __name__ == "__main__":
