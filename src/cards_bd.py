@@ -58,7 +58,9 @@ def players_collectors(conn):
 
 def player_list(conn):
     """List players and the number of cards they own."""
-    pass
+    sql_req = cards_bd.sql_src["player_list"]
+    cards_bd.db_execute(conn, sql_req)
+    
 
 
 def players_by_value(conn):

@@ -68,7 +68,7 @@ def remove_card_version(conn, id_version):
     logging.debug("Removed version '%s'", id_version)
 
 
-def add_possession(conn):
+def add_possession(conn, nom_deck, pseudo):
     sql_req = cards_bd.sql_src["add"]["possession"]
     cards_bd.db_execute(conn, sql_req, (nom_deck, pseudo))
     logging.debug("Added deck '%s' for pseudo '%s'", nom_deck, pseudo)

@@ -145,3 +145,11 @@ remove:
     DELETE FROM `plays` WHERE `id_deck`= %s;
   game: >-
     DELETE FROM `games` WHERE `id_deck`= %s;
+
+
+#Statistiques
+player_list: >-
+  SELECT pseudo, id_carte, count(*)
+  FROM `versions`, `possessions` 
+  WHERE possessions.id_version = versions.id_version
+  group by id_carte;
