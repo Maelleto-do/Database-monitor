@@ -101,6 +101,43 @@ insert into POSSESSIONS values (NULL, 'Gouvernathor', 12, '2019-02-03', 'OCCASIO
 
 -- DECKS
 
+alter table DECKS AUTO_INCREMENT = 1;
+
+insert into DECKS values (NULL, 'deck fort', 'Matodo') ; 
+insert into DECKS values (NULL, 'deck nul', 'Matodo') ; 
+insert into DECKS values (NULL, 'deck cool', 'Boytus') ; 
+insert into DECKS values (NULL, 'deck X', 'Toastation') ; 
+insert into DECKS values (NULL, 'deck Y', 'Gouvernathor') ; 
+
+-- AFFILIATIONS
+
+insert into AFFILIATIONS values (1, 1) ;
+insert into AFFILIATIONS values (5, 1) ;
+insert into AFFILIATIONS values (3, 2) ;
+insert into AFFILIATIONS values (7, 2) ;
+insert into AFFILIATIONS values (9, 3) ;
+insert into AFFILIATIONS values (10, 3) ;
+insert into AFFILIATIONS values (13, 4) ;
+insert into AFFILIATIONS values (14, 4) ;
+insert into AFFILIATIONS values (17, 5) ;
+insert into AFFILIATIONS values (18, 5) ;
+
+-- GAMES
+
+alter table GAMES AUTO_INCREMENT = 1;
+
+insert into GAMES values (NULL, '2019-01-02', 'Bordeaux', 'Foyer', 'Matodo') ;
+insert into GAMES values (NULL, '2019-01-03', 'Bordeaux', 'Foyer', 'Boytus') ;
+insert into GAMES values (NULL, '2019-01-04', 'Bordeaux', 'Magasin', 'Toastation') ;
+
+-- PLAYS
+
+insert into PLAYS values (1, 1, 'Matodo') ;
+insert into PLAYS values (1, 5, 'Gouvernathor') ;
+insert into PLAYS values (2, 2, 'Matodo') ;
+insert into PLAYS values (2, 3, 'Boytus') ;
+insert into PLAYS values (3, 1, 'Toastation') ;
+insert into PLAYS values (3, 4, 'Matodo') ;
 
 -- -- ============================================================
 -- --    verification des donnees
