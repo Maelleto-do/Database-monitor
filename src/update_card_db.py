@@ -3,7 +3,7 @@
 import cards_bd
 import logging
 
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.DEBUG)
 
 
 def create_tables(conn):
@@ -16,6 +16,7 @@ def create_tables(conn):
 def drop_tables(conn):
     """Delete the card database"""
     for table, sql_req in cards_bd.sql_src["drop_table"].items():
+        logging.debug("Dropping '%s' table...", table)
         cards_bd.db_execute(conn, sql_req)
         logging.debug("'%s' table dropped", table)
 
@@ -57,10 +58,10 @@ def remove_card(conn, id_card):
     cards_bd.db_execute(conn, sql_req, id_card)
 
 
-def add_card_version(conn, id_carte, rendu="Normal", cote=0, tirage=0):
+def add_card_version(conn, id_card, rendering="Normal", rating=0, print_run=0):
     sql_req = cards_bd.sql_src["add"]["version"]
-    cards_bd.db_execute(conn, sql_req, (id_carte, rendu, cote, tirage))
-    logging.debug("Added version '%s' for card %s", rendu, id_carte)
+    cards_bd.db_execute(conn, sql_req, (id_card, rendering, rating, print_run))
+    logging.debug("Added version '%s' for card %s", rendering, id_card)
 
 
 def remove_card_version(conn, id_version):
