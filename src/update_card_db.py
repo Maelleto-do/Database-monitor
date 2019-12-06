@@ -23,7 +23,7 @@ def drop_tables(conn):
 
 def add_player(conn, pseudo, nom=None, prenom=None):
     """Add a player in the database"""
-    sql_req = cards_bd.sql_src["add"]["deck"]
+    sql_req = cards_bd.sql_src["add"]["player"]
     cards_bd.db_execute(conn, sql_req, (pseudo, nom, prenom))
 
 

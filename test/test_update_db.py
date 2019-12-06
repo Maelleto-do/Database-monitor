@@ -51,20 +51,21 @@ class TestUpdate(unittest.TestCase):
         update_card_db.add_player(
             self.conn, "pseudoJoueurTest", "nomJoueurTest", "prenomJoueurTest"
         )
-        sql_req = "SELECT * FROM joueurs"
+        sql_req = "SELECT * FROM players"
         cur = cards_bd.db_execute(self.conn, sql_req)
+        res = cur.fetchall()
         self.assertIn(
             {
                 "pseudo": "pseudoJoueurTest",
-                "nom_joueur": "nomJoueurTest",
-                "prenom_joueur": "prenomJoueurTest",
+                "player_name": "nomJoueurTest",
+                "player_first_name": "prenomJoueurTest",
             },
-            cur.fetchall(),
+            res,
         )
 
     def test_2_remove_player(self):
         update_card_db.remove_player(self.conn, "pseudoJoueurTest")
-        sql_req = "SELECT * FROM joueurs"
+        sql_req = "SELECT * FROM players"
         cur = cards_bd.db_execute(self.conn, sql_req)
         self.assertNotIn({"pseudo": "pseudoJoueurTest"}, cur.fetchall())
 
@@ -118,6 +119,7 @@ class TestUpdate(unittest.TestCase):
         cur = cards_bd.db_execute(
             self.conn, "SELECT * FROM cards where title = 'Le Roi soleil'"
         )
+        update_card_db.add_player(self.conn, "PSEUDO", "NOM", "PRENOM")
         card_id = cur.fetchone()["id_card"]
         update_card_db.add_card_version(
             self.conn, id_card=card_id, rendering="Brillant"
