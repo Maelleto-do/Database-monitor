@@ -125,10 +125,37 @@ class TestUpdate(unittest.TestCase):
         self.assertEqual(len(cur.fetchall()), 0)
 
     def test_7_add_game(self):
-        pass
+        # Parameters
+        game_date = "2018-09-24 22:21:20"
+        game_location = "Paris"
+        tournament_type = "Amateur"
+        game_results = 0  # id of winner
+        # Test
+        update_card_db.add_game(
+            self.conn, game_date, game_location, tournament_type, game_results
+        )
+        cur = cards_bd.db_execute(
+            self.conn, "SELECT * FROM possessions where pseudo = %s", (pseudo),
+        )
+        game = cur.fetchone()
+        self.assertEqual(game["game_date"], game_date, "La date n'est pas la bonne")
+        self.assertEqual(
+            game["game_location"], game_location, "Le lieu n'est pas le bon"
+        )
+        self.assertEqual(
+            game["tournament_type"], tournament_type, "Le type n'est pas le bon"
+        )
+        self.assertEqual(
+            game["game_results"], game_result, "Les résultats ne sont pas les bons"
+        )
 
     def test_7_remove_game(self):
-        pass
+        # Parameters
+        id_game = 0
+        # Test
+        update_card_db.remove_card_version(self.conn, id_possession)
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM possession")
+        self.assertEqual(len(cur.fetchall()), 0, "La partie n'a pas été supprimée")
 
     def test_9_drop_db(self):
         update_card_db.drop_tables(self.conn)

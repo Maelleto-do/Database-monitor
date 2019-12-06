@@ -102,10 +102,10 @@ def remove_possession(conn, id_possession):
     logging.debug("Removed possession '%s'", id_possession)
 
 
-def add_game(conn, date_partie, lieu_partie, type_tournoi, resultat_partie):
+def add_game(conn, game_date, game_location, tournament_type, game_results):
     sql_req = cards_bd.sql_src["add"]["game"]
     cards_bd.db_execute(
-        conn, sql_req, (date_partie, lieu_partie, type_tournoi, resultat_partie)
+        conn, sql_req, (game_date, game_location, tournament_type, game_results)
     )
     logging.debug("Added game")
 
