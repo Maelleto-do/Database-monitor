@@ -152,3 +152,5 @@ consultation:
   cards_not_in_deck: >-
     SELECT DISTINCT `title`, `familly`, `attack`, `defense`, `rendering`, `print_run`, `rating` FROM (`cards` NATURAL JOIN `versions`) WHERE versions.id_version NOT IN
     (SELECT DISTINCT versions.id_version FROM (`cards` NATURAL JOIN `versions`) NATURAL JOIN `possessions`);
+  players_collector: >-
+    SELECT DISTINCT `pseudo` FROM `players` WHERE players.pseudo NOT IN (SELECT `pseudo` FROM `plays`);

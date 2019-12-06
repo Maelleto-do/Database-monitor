@@ -2,6 +2,9 @@
 
 import yaml
 import os
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 script_dir = os.path.dirname(__file__)
 yaml_file = script_dir + "/sql_src.yaml"
@@ -38,20 +41,33 @@ def close():
 # Consultation
 
 
-def cards_by_type(conn):
+def cards_by_type(conn, card_type):
     """List cards of a certain type."""
-    pass
+    sql_req = sql_src["consultation"]["cards_by_type"]
+    db_execute(conn, sql_req, card_type)
+    logging.debug("Consulted cards of type '%s'", card_type)
+
+
+def cards_in_possession(conn):
+    """List cards that are or have been owned by a player."""
+    sql_req = sql_src["consultation"]["cards_in_possession"]
+    db_execute(conn, sql_req)
+    logging.debug("Consulted cards owned by players")
 
 
 def cards_not_in_deck(conn):
-    """List cards not in a deck."""
-    pass
+    """List cards that are not in any deck"""
+    sql_req = sql_src["consultation"]["cards_not_in_deck"]
+    db_execute(conn, sql_req)
+    logging.debug("Consulted cards that are not in any deck")
+
 
 
 def players_collectors(conn):
     """List players that didn't participated in a game."""
-    pass
-
+    sql_req = sql_src["consultation"]["players_collector"]
+    db_execute(conn, sql_req)
+    logging.debug("Consulted players that have not played (collectors)")
 
 # Statistic
 
