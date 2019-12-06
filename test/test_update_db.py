@@ -52,14 +52,12 @@ class TestUpdate(unittest.TestCase):
         cur = cards_bd.db_execute(self.conn, sql_req)
         self.assertIn({'pseudo': "pseudoJoueurTest", 'nom_joueur': "nomJoueurTest", 'prenom_joueur': "prenomJoueurTest"}, cur.fetchall())
 
-    def test_delete_player(self):
+
+    def test_2_remove_player(self):
         update_card_db.remove_player(self.conn, "pseudoJoueurTest")
         sql_req = "SELECT * FROM joueurs"
         cur = cards_bd.db_execute(self.conn, sql_req)
         self.assertNotIn( {'pseudo': "pseudoJoueurTest"}, cur.fetchall() )
-
-    def test_2_remove_player(self):
-        pass
 
     # def test_3_add_deck(self):
     #     update_card_db.add_deck(self.conn, nom_deck="Magie", pseudo="Merlin")

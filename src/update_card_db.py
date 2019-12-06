@@ -27,7 +27,8 @@ def add_player(conn, pseudo, nom, prenom):
 
 def remove_player(conn, pseudo):
     """Remove a player from the database"""
-    cards_bd.db_execute(conn, cards_bd.sql_src["remove_player"], pseudo)
+    sql_req = cards_bd.sql_src["remove_player"]
+    cards_bd.db_execute(conn, sql_req, pseudo)
 
 
 def add_deck(conn, nom_deck, pseudo):
