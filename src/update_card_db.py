@@ -20,14 +20,15 @@ def drop_tables(conn):
         logging.debug("'%s' table dropped", table)
 
 
-def add_player(conn, pseudo, nom, prenom):
+def add_player(conn, pseudo, nom=None, prenom=None):
     """Add a player in the database"""
-    cards_bd.db_execute(conn, cards_bd.sql_src["insert_player"], [pseudo, nom, prenom])
+    sql_req = cards_bd.sql_src["add"]["deck"]
+    cards_bd.db_execute(conn, sql_req, (pseudo, nom, prenom))
 
 
 def remove_player(conn, pseudo):
     """Remove a player from the database"""
-    sql_req = cards_bd.sql_src["remove_player"]
+    sql_req = cards_bd.sql_src["remove"]["player"]
     cards_bd.db_execute(conn, sql_req, pseudo)
 
 
