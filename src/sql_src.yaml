@@ -65,9 +65,9 @@ create_table:
       id_game INT UNSIGNED,
       id_deck INT UNSIGNED,
       pseudo VARCHAR(64),
-      FOREIGN KEY (id_game) REFERENCES games(id_partie),
+      FOREIGN KEY (id_game) REFERENCES games(id_game),
       FOREIGN KEY (id_deck) REFERENCES decks(id_deck),
-      FOREIGN KEY (pseudo) REFERENCES joueurs(pseudo),
+      FOREIGN KEY (pseudo) REFERENCES players(pseudo),
       PRIMARY KEY (id_game, id_deck, pseudo)
     )
 
@@ -112,7 +112,7 @@ add:
       purchase_mode,
       sale_date,
       sale_price,
-      sale
+      state
     ) VALUES(%s, %s, %s, %s, %s, %s, %s)
   play: >-
     INSERT INTO plays(
