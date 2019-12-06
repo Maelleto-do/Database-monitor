@@ -143,3 +143,12 @@ remove:
     DELETE FROM `plays` WHERE `id_play`= %s;
   game: >-
     DELETE FROM `games` WHERE `id_game`= %s;
+
+consultation: 
+  cards_by_type: >-
+    SELECT * FROM `cards` WHERE `familly` = %s;
+  cards_in_possession: >-
+    SELECT DISTINCT `title`, `familly`, `attack`, `defense`, `rendering`, `print_run`, `rating` FROM (`cards` NATURAL JOIN `versions`) NATURAL JOIN `possessions` ;
+  cards_not_in_deck: >-
+    SELECT DISTINCT `title`, `familly`, `attack`, `defense`, `rendering`, `print_run`, `rating` FROM (`cards` NATURAL JOIN `versions`) WHERE versions.id_version NOT IN
+    (SELECT DISTINCT versions.id_version FROM (`cards` NATURAL JOIN `versions`) NATURAL JOIN `possessions`);

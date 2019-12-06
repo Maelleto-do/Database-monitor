@@ -6,9 +6,10 @@ delete from GAMES ;
 delete from PLAYS ;
 delete from DECKS ;
 delete from POSSESSIONS ;
-delete from JOUEURS ;
+delete from PLAYERS ;
 delete from VERSIONS ;
-delete from CARTES ;
+delete from MEMBERSHIPS ;
+delete from CARDS ;
 
 commit ;
 
@@ -18,21 +19,21 @@ commit ;
 
 -- CARDS
 
-alter table CARTES AUTO_INCREMENT = 1;
-insert into CARTES values (NULL, 'Lancephorhynchus', 'Weird dragon', 'Wind', 2500, 800) ;
-insert into CARTES values (NULL, 'Edge Imp Sabres',  'It''s an imp', 'Dark', 1200, 800) ;
-insert into CARTES values (NULL, 'Qliphort Carrier', 'Strange name', 'Earth', 2400, 1000) ;
-insert into CARTES values (NULL, 'Qliphort Helix', 'Carrier''s brother', 'Earth', 2400, 1000)  ;
-insert into CARTES values (NULL, 'Taotie, Shadow of the Yang Zing', 'Dog', 'Dark', 2200, 0) ;
-insert into CARTES values (NULL, 'Machina Megaform', 'Big robot', 'Eath', 2600, 1500) ;
-insert into CARTES values (NULL, 'Rescue Hamster', 'Cute', 'Earth', 300, 100) ;
-insert into CARTES values (NULL, 'First of the Dragons', 'Dragon fusion', 'Dark', 2700, 2000) ;
-insert into CARTES values (NULL, 'Herald of the Arc Light', 'Fairy synchro', 'Light', 600, 1000) ;
-insert into CARTES values (NULL, '1st movement solo', 'Summon something', 'Spell', 0, 0) ;
-insert into CARTES values (NULL, 'El Shaddoll Fusion', 'It''s a fusion', 'Spell', 0, 0) ;
-insert into CARTES values (NULL, 'First Lake of the Burning Abyss', 'It''s a trap!', 'Trap', 0, 0) ;
-insert into CARTES values (NULL, 'Number 39: Utopia Beyond', 'Warrior', 'Light', 3000, 2500) ;
-insert into CARTES values (NULL, 'CXyz Barian Hope', 'Warrior', 'Light', 0, 0) ;
+alter table CARDS AUTO_INCREMENT = 1;
+insert into CARDS values (NULL, 'Lancephorhynchus', 'Weird dragon', 'Wind', 2500, 800) ;
+insert into CARDS values (NULL, 'Edge Imp Sabres',  'It''s an imp', 'Dark', 1200, 800) ;
+insert into CARDS values (NULL, 'Qliphort Carrier', 'Strange name', 'Earth', 2400, 1000) ;
+insert into CARDS values (NULL, 'Qliphort Helix', 'Carrier''s brother', 'Earth', 2400, 1000)  ;
+insert into CARDS values (NULL, 'Taotie, Shadow of the Yang Zing', 'Dog', 'Dark', 2200, 0) ;
+insert into CARDS values (NULL, 'Machina Megaform', 'Big robot', 'Eath', 2600, 1500) ;
+insert into CARDS values (NULL, 'Rescue Hamster', 'Cute', 'Earth', 300, 100) ;
+insert into CARDS values (NULL, 'First of the Dragons', 'Dragon fusion', 'Dark', 2700, 2000) ;
+insert into CARDS values (NULL, 'Herald of the Arc Light', 'Fairy synchro', 'Light', 600, 1000) ;
+insert into CARDS values (NULL, '1st movement solo', 'Summon something', 'Spell', 0, 0) ;
+insert into CARDS values (NULL, 'El Shaddoll Fusion', 'It''s a fusion', 'Spell', 0, 0) ;
+insert into CARDS values (NULL, 'First Lake of the Burning Abyss', 'It''s a trap!', 'Trap', 0, 0) ;
+insert into CARDS values (NULL, 'Number 39: Utopia Beyond', 'Warrior', 'Light', 3000, 2500) ;
+insert into CARDS values (NULL, 'CXyz Barian Hope', 'Warrior', 'Light', 0, 0) ;
 
 commit ;
 
@@ -61,12 +62,12 @@ insert into VERSIONS values (NULL, 5, 'SHINY', 100, 1000) ;
 
 commit ;
 
--- JOUEURS
+-- PLAYERS
 
-insert into JOUEURS values ('Matodo', 'Maelle', 'Toy-Riont--Le-Dosseur') ;
-insert into JOUEURS values ('Boytus', 'Lucas', 'Henry') ; 
-insert into JOUEURS values ('Toastation', 'Melvin', 'Even') ;
-insert into JOUEURS values ('Gouvernathor', 'Pierre', 'Tavia') ; 
+insert into PLAYERS values ('Matodo', 'Maelle', 'Toy-Riont--Le-Dosseur') ;
+insert into PLAYERS values ('Boytus', 'Lucas', 'Henry') ; 
+insert into PLAYERS values ('Toastation', 'Melvin', 'Even') ;
+insert into PLAYERS values ('Gouvernathor', 'Pierre', 'Tavia') ; 
 
 commit ;
 
@@ -109,18 +110,18 @@ insert into DECKS values (NULL, 'deck cool', 'Boytus') ;
 insert into DECKS values (NULL, 'deck X', 'Toastation') ; 
 insert into DECKS values (NULL, 'deck Y', 'Gouvernathor') ; 
 
--- AFFILIATIONS
+-- MEMBERSHIPS
 
-insert into AFFILIATIONS values (1, 1) ;
-insert into AFFILIATIONS values (5, 1) ;
-insert into AFFILIATIONS values (3, 2) ;
-insert into AFFILIATIONS values (7, 2) ;
-insert into AFFILIATIONS values (9, 3) ;
-insert into AFFILIATIONS values (10, 3) ;
-insert into AFFILIATIONS values (13, 4) ;
-insert into AFFILIATIONS values (14, 4) ;
-insert into AFFILIATIONS values (17, 5) ;
-insert into AFFILIATIONS values (18, 5) ;
+insert into MEMBERSHIPS values (1, 1) ;
+insert into MEMBERSHIPS values (5, 1) ;
+insert into MEMBERSHIPS values (3, 2) ;
+insert into MEMBERSHIPS values (7, 2) ;
+insert into MEMBERSHIPS values (9, 3) ;
+insert into MEMBERSHIPS values (10, 3) ;
+insert into MEMBERSHIPS values (13, 4) ;
+insert into MEMBERSHIPS values (14, 4) ;
+insert into MEMBERSHIPS values (17, 5) ;
+insert into MEMBERSHIPS values (18, 5) ;
 
 -- GAMES
 
@@ -143,9 +144,9 @@ insert into PLAYS values (3, 4, 'Matodo') ;
 -- --    verification des donnees
 -- -- ============================================================
 
-select count(*),'= 14 ?','ACTEUR' from CARTES 
+select count(*),'= 14 ?','CARTES' from CARDS 
 union
-select count(*),'= 19 ?','FILM' from VERSIONS 
+select count(*),'= 19 ?','VERSIONS' from VERSIONS 
 union 
-select count(*),'= 4 ?','FILM' from JOUEURS
+select count(*),'= 4 ?','JOUEURS' from PLAYERS
 commit ; 
