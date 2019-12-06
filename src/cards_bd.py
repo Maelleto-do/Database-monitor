@@ -69,12 +69,16 @@ def players_collectors(conn):
     db_execute(conn, sql_req)
     logging.debug("Consulted players that have not played (collectors)")
 
+
 # Statistic
 
 
 def player_list(conn):
     """List players and the number of cards they own."""
-    pass
+    sql_req = sql_src["stats"]["player_nb_cards"]
+    db_execute(conn, sql_req)
+    logging.debug("Consulted stats for the number of cards per player")
+
 
 
 def players_by_value(conn):

@@ -2,13 +2,13 @@
 --    delete data (not tables)
 -- ============================================================
 
-delete from GAMES ;
 delete from PLAYS ;
+delete from GAMES ;
+delete from MEMBERSHIPS ;
 delete from DECKS ;
 delete from POSSESSIONS ;
 delete from PLAYERS ;
 delete from VERSIONS ;
-delete from MEMBERSHIPS ;
 delete from CARDS ;
 
 commit ;

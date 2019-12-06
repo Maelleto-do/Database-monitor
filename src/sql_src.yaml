@@ -164,3 +164,7 @@ consultation:
     (SELECT DISTINCT versions.id_version FROM (`cards` NATURAL JOIN `versions`) NATURAL JOIN `possessions`);
   players_collector: >-
     SELECT DISTINCT `pseudo` FROM `players` WHERE players.pseudo NOT IN (SELECT `pseudo` FROM `plays`);
+
+stats:
+  player_nb_cards: >-
+    SELECT DISTINCT pseudo, count(*) AS 'NB CARDS' FROM possessions GROUP BY pseudo;
