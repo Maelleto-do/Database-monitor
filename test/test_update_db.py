@@ -102,10 +102,27 @@ class TestUpdate(unittest.TestCase):
         self.assertEqual(len(cur.fetchall()), 0)
 
     def test_6_add_possession(self):
-        pass
+        # Parameters
+        pseudo = "PSEUDO"
+        id_possession = 0
+        # Test
+        update_card_db.add_possession(self.conn, pseudo, id_possession)
+        cur = cards_bd.db_execute(
+            self.conn, "SELECT * FROM possessions where pseudo = %s", (pseudo),
+        )
+        possession = cur.fetchone()
+        self.assertEqual(possession["pseudo"], pseudo, "Le pseudo n'est pas le bon")
+        self.assertEqual(
+            possession["id_version"], id_version, "La version n'est pas la bonne"
+        )
 
     def test_6_remove_possession(self):
-        pass
+        # Parameters
+        id_possession = 0
+        # Test
+        update_card_db.remove_card_version(self.conn, id_possession)
+        cur = cards_bd.db_execute(self.conn, "SELECT * FROM possession")
+        self.assertEqual(len(cur.fetchall()), 0)
 
     def test_7_add_game(self):
         pass
