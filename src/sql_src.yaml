@@ -168,4 +168,28 @@ consultation:
 stats:
   player_nb_cards: >-
     SELECT DISTINCT pseudo, count(*) AS 'NB CARDS' FROM possessions GROUP BY pseudo;
->>>>>>> ad3c5c6fe11fcd411b2b11b18238084c2cc49dd7
+  players_by_value: >-
+    SELECT P.pseudo, SUM((rating * P.state)) as 'TOTAL RATE' FROM
+    possessions P, versions V
+    where P.id_version = V.id_version
+    group by P.pseudo;
+  cards_in_decks: >-
+    SELECT D.title, count(*) as 'NB_PLAYERS' FROM
+    (
+     SELECT DISTINCT C.id_card, C.title, S.pseudo FROM
+     versions V, (SELECT DISTINCT id_possession, id_version, D.pseudo FROM 
+     possessions P, decks D
+     where P.pseudo = D.pseudo) as S, cards C
+      where S.id_version = V.id_version
+      and C.id_card = V.id_card
+    ) as D
+    group by D.id_card; 
+  player_rare_collectors: >-
+    SELECT MAX(A.total) as 'maxRate' FROM 
+    (
+      SELECT P.pseudo, SUM((rating * P.state)) as 'total' FROM
+      possessions P, versions V
+      where P.id_version = V.id_version
+      group by P.pseudo
+    ) as A;
+    
