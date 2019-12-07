@@ -147,8 +147,8 @@ remove:
 
 #Statistiques
 player_list: >-
-  SELECT pseudo, id_carte, count(*)
+  SELECT pseudo, id_version, count(*)
   FROM `versions`, `possessions` 
   WHERE possessions.id_version = versions.id_version
-  group by id_carte;
+  group by id_version;
 

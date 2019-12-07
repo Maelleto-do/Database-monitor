@@ -31,12 +31,12 @@ def main():
     cards_bd.init()
 
 
-    # update_card_db.create_tables(conn)
+    update_card_db.create_tables(conn)
     # update_card_db.add_deck(conn, 'myDeckTest', 'pseudoTest')
     # update_card_db.add_card(conn, "roudoudou", "rose", "pokemon", attaque=0, defense=0)
     # update_card_db.add_card(conn, "pikachu", "jaune", "pokemon", attaque=0, defense=0)
     # update_card_db.add_card_version(conn, 1, rendu="Normal", cote=0, tirage=0)
-    update_card_db.add_possession(conn, 'myDeckTest', 'pseudoTest')
+    # update_card_db.add_possession(conn, 'myDeckTest', 'pseudoTest')
 
 if __name__ == "__main__":
     main()
