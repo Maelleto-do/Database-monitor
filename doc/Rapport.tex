@@ -45,7 +45,19 @@ Système de gestion de Base de Donnée \hfill Nov. 2019\\
 
 \section{Modélisation des données}
 \subsection{Description du contexte de l'application}
+
+Les jeux de cartes à collectionner sont un élément important de la pop-culture de ces dernières années, et aussi un marché économique digne d'intéret. En effet, avec la popularisation de jeux comme Pokémon, Magic ou Yu-Gi-Oh depuis les années 90, ce sont de plus en plus de jeux et de joueurs qui se créent et qui se développent.
+
+L'objectif est ici de créer une base de données correspondant à un de ces jeux de cartes à collectionner. Nous devons être capable d'y enregistrer quelles sont les versions différentes d'une même carte, et de calculer la valeur (ou la 'cote') d'une carte, à partir notamment de sa date de publication, du nombre d'exemplaires à laquelle elle a été tirée, et de son état.
+
+Nous allons aussi répertorier chacun des matchs opposant les joueurs, avec l'endroit où ils ont lieu et le nom du vainqueur. Pour faire ça, nous devons donc enregistrer une liste des différents joueurs.
+
+Les joueurs doivent aussi pouvoir les regrouper par mains (ou 'decks') pour pouvoir retrouver quelle carte était possédée par quel joueur, pour chacune des parties.
+
 \subsection{Modèle entité-association}
+
+\includegraphics[width=\textwidth]{modele_conceptuel.png}
+
 \subsection{Liste des opérations prévues sur la base}
 
 Voici la liste des actions retenues sur la base de donnée~:
@@ -116,7 +128,7 @@ Après l'ajout des contraintes : \\
 \texttt{Jeu(\underline{id\_partie} [U, NN], \underline{id\_deck} [U, NN], \underline{pseudo} [U, NN])} \\
 
 \textit{Contraintes : U = Unique, NN = Non nul}
-% contrainte pour la table Appartenance : les entités représentées par les clés étrangères #id_possession #id_deck doivent contenir la même clé étrangère #pseudo 
+% contrainte pour la table Appartenance : les entités représentées par les clés étrangères #id_possession #id_deck doivent contenir la même clé étrangère #pseudo
 
 \subsection{Shéma relationnel en $3^e$ forme normale}
 

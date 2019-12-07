@@ -81,6 +81,16 @@ drop_table:
   versions: "DROP TABLE IF EXISTS versions"
   cards: "DROP TABLE IF EXISTS cards"
 
+list:
+  plays: "SELECT * FROM plays"
+  games: "SELECT * FROM games"
+  memberships: "SELECT * FROM memberships"
+  decks: "SELECT * FROM decks"
+  possessions: "SELECT * FROM possessions"
+  players: "SELECT * FROM players"
+  versions: "SELECT * FROM versions"
+  cards: "SELECT * FROM cards"
+
 add:
   player: >-
     INSERT INTO players (pseudo, player_name, player_first_name) VALUES (%s,%s,%s)
@@ -142,13 +152,20 @@ remove:
   play: >-
     DELETE FROM `plays` WHERE `id_play`= %s;
   game: >-
-    DELETE FROM `games` WHERE `id_deck`= %s;
+    DELETE FROM `games` WHERE `id_game`= %s;
 
+consultation: 
+  cards_by_type: >-
+    SELECT * FROM `cards` WHERE `familly` = %s;
+  cards_in_possession: >-
+    SELECT DISTINCT `title`, `familly`, `attack`, `defense`, `rendering`, `print_run`, `rating` FROM (`cards` NATURAL JOIN `versions`) NATURAL JOIN `possessions` ;
+  cards_not_in_deck: >-
+    SELECT DISTINCT `title`, `familly`, `attack`, `defense`, `rendering`, `print_run`, `rating` FROM (`cards` NATURAL JOIN `versions`) WHERE versions.id_version NOT IN
+    (SELECT DISTINCT versions.id_version FROM (`cards` NATURAL JOIN `versions`) NATURAL JOIN `possessions`);
+  players_collector: >-
+    SELECT DISTINCT `pseudo` FROM `players` WHERE players.pseudo NOT IN (SELECT `pseudo` FROM `plays`);
 
-#Statistiques
-player_list: >-
-  SELECT pseudo, id_version, count(*)
-  FROM `versions`, `possessions` 
-  WHERE possessions.id_version = versions.id_version
-  group by id_version;
-
+stats:
+  player_nb_cards: >-
+    SELECT DISTINCT pseudo, count(*) AS 'NB CARDS' FROM possessions GROUP BY pseudo;
+>>>>>>> ad3c5c6fe11fcd411b2b11b18238084c2cc49dd7

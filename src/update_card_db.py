@@ -117,3 +117,15 @@ def remove_game(conn, id_game):
     sql_req = cards_bd.sql_src["remove"]["game"]
     cards_bd.db_execute(conn, sql_req, (id_game))
     logging.debug("Removed game '%s'", id_game)
+
+
+def add_play(conn, id_game, id_deck, pseudo):
+    sql_req = cards_bd.sql_src["add"]["play"]
+    cards_bd.db_execute(conn, sql_req, (id_game, id_deck, pseudo))
+    logging.debug("Added play")
+
+
+def remove_play(conn, id_play):
+    sql_req = cards_bd.sql_src["remove"]["play"]
+    cards_bd.db_execute(conn, sql_req, (id_play))
+    logging.debug("Removed play '%s'", id_play)

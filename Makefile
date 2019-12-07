@@ -21,4 +21,7 @@ run:
 test: $(TST_DIR)/*
 	python3 $(TST_DIR)/test_cards_bd.py
 
+shell:
+	python3 $(SRC_DIR)/shell.py
+
 # end
