@@ -94,7 +94,6 @@ def cards_in_decks(conn):
     logging.debug("Consulted stats for cards and the number of players that use them in their decks")
 
 
-
 def player_rare_collectors(conn):
     """List players who own the maximum of rare card."""
     sql_req = sql_src["stats"]["cards_in_decks"]
@@ -104,4 +103,6 @@ def player_rare_collectors(conn):
 
 def cards_family(conn):
     """List card family and the caracteristic in which this family has the best level."""
-    pass
+    sql_req = sql_src["stats"]["cards_family"]
+    db_execute(conn, sql_req)
+    logging.debug("Consulted stats for family and the caracteristic in which this family has the best level")

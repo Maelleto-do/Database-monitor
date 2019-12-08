@@ -178,7 +178,7 @@ stats:
     (
      SELECT DISTINCT C.id_card, C.title, S.pseudo FROM
      versions V, (SELECT DISTINCT id_possession, id_version, D.pseudo FROM 
-     possessions P, decks D
+     possessions P, decks D 
      where P.pseudo = D.pseudo) as S, cards C
       where S.id_version = V.id_version
       and C.id_card = V.id_card
@@ -192,4 +192,17 @@ stats:
       where P.id_version = V.id_version
       group by P.pseudo
     ) as A;
-    
+  cards_family: >-
+    SELECT familly, 
+      CASE
+          WHEN A.attack = 0 AND A.defense = 0 THEN 'attack and defense level at zero'
+          WHEN A.attack = A.defense THEN 'best for attack and defense'
+          WHEN A.attack >= A.defense THEN 'best for attack'
+          else 'best for defense'
+      END AS BestLevelCaracteristic
+    FROM 
+    (
+      SELECT familly, SUM(attack) as 'attack', SUM(defense) as 'defense' FROM
+      cards
+      group by familly
+    ) as A; 
