@@ -41,33 +41,32 @@ def close():
 # Consultation
 
 
-def cards_by_type(conn, card_type):
+def cards_by_type(conn, card_type="NORMAL"):
     """List cards of a certain type."""
     sql_req = sql_src["consultation"]["cards_by_type"]
-    db_execute(conn, sql_req, card_type)
     logging.debug("Consulted cards of type '%s'", card_type)
+    return db_execute(conn, sql_req, card_type)
 
 
 def cards_in_possession(conn):
     """List cards that are or have been owned by a player."""
     sql_req = sql_src["consultation"]["cards_in_possession"]
-    db_execute(conn, sql_req)
     logging.debug("Consulted cards owned by players")
+    return db_execute(conn, sql_req)
 
 
 def cards_not_in_deck(conn):
     """List cards that are not in any deck"""
     sql_req = sql_src["consultation"]["cards_not_in_deck"]
-    db_execute(conn, sql_req)
     logging.debug("Consulted cards that are not in any deck")
-
+    return db_execute(conn, sql_req)
 
 
 def players_collectors(conn):
     """List players that didn't participated in a game."""
     sql_req = sql_src["consultation"]["players_collector"]
-    db_execute(conn, sql_req)
     logging.debug("Consulted players that have not played (collectors)")
+    return db_execute(conn, sql_req)
 
 
 # Statistic
@@ -84,14 +83,18 @@ def players_by_value(conn):
     """List player in descending order by the value of their collection."""
     sql_req = sql_src["stats"]["players_by_value"]
     db_execute(conn, sql_req)
-    logging.debug("Consulted stats for listing players in descending order by the value of their collection")
+    logging.debug(
+        "Consulted stats for listing players in descending order by the value of their collection"
+    )
 
 
 def cards_in_decks(conn):
     """List cards and the number of players that use them in their decks."""
     sql_req = sql_src["stats"]["cards_in_decks"]
     db_execute(conn, sql_req)
-    logging.debug("Consulted stats for cards and the number of players that use them in their decks")
+    logging.debug(
+        "Consulted stats for cards and the number of players that use them in their decks"
+    )
 
 
 def player_rare_collectors(conn):
@@ -105,4 +108,6 @@ def cards_family(conn):
     """List card family and the caracteristic in which this family has the best level."""
     sql_req = sql_src["stats"]["cards_family"]
     db_execute(conn, sql_req)
-    logging.debug("Consulted stats for family and the caracteristic in which this family has the best level")
+    logging.debug(
+        "Consulted stats for family and the caracteristic in which this family has the best level"
+    )

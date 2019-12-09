@@ -20,35 +20,46 @@ tables = [
     {"name": "play", "add": sa.add_play, "remove": sr.remove_play},
 ]
 
+consultations = [
+    {"name": "cards_by_type", "function": cards_bd.cards_by_type},
+    {"name": "cards_in_possession", "function": cards_bd.cards_in_possession},
+    {"name": "cards_not_in_deck", "function": cards_bd.cards_not_in_deck},
+    {"name": "players_collectors", "function": cards_bd.players_collectors},
+]
+
 host = os.environ["DB_HOST"]
 user = os.environ["DB_USER"]
 password = os.environ["DB_PASSWORD"]
 db_name = os.environ["DB_NAME"]
 
 
+def sql_display(data):
+    print("\n+", end="")
+    for key in data[0]:
+        print("{:-^15}".format(""), end="+")
+    print("\n|", end="")
+    for key in data[0]:
+        print("{:^15.15}".format(key), end="|")
+    print("\n+", end="")
+    for key in data[0]:
+        print("{:-^15}".format(""), end="+")
+    for res in data:
+        print("\n|", end="")
+        for item in res.values():
+            print(
+                "{:^15.15}".format(str(item) if item else "None"), end="|",
+            )
+    print("\n+", end="")
+    for key in data[0]:
+        print("{:-^15}".format(""), end="+")
+    print("\n")
+
+
 def list_table(conn, table):
     cur = cards_bd.db_execute(conn, cards_bd.sql_src["list"][table])
-    result = cur.fetchall()
-    if result:
-        print("\n+", end="")
-        for key in result[0]:
-            print("{:-^15}".format(""), end="+")
-        print("\n|", end="")
-        for key in result[0]:
-            print("{:^15.15}".format(key), end="|")
-        print("\n+", end="")
-        for key in result[0]:
-            print("{:-^15}".format(""), end="+")
-        for res in result:
-            print("\n|", end="")
-            for item in res.values():
-                print(
-                    "{:^15.15}".format(str(item) if item else "None"), end="|",
-                )
-        print("\n+", end="")
-        for key in result[0]:
-            print("{:-^15}".format(""), end="+")
-        print("\n")
+    results = cur.fetchall()
+    if results:
+        sql_display(results)
 
 
 class SqlShell(cmd.Cmd):
@@ -114,6 +125,32 @@ class SqlShell(cmd.Cmd):
                 print(" - {}s".format(table["name"]))
             print()
 
+    def do_consult(self, arg):
+        "Consultations"
+        if arg:
+            consultation = arg.split(" ")[0]
+            if consultation in [c["name"] for c in consultations]:
+                c_dict = [t for t in consultations if t["name"] == consultation][0]
+                if len(arg.split(" ")) > 1:
+                    data = c_dict["function"](self.conn, arg.split(" ")[1]).fetchall()
+                else:
+                    data = c_dict["function"](self.conn).fetchall()
+
+                if data:
+                    sql_display(data)
+
+            else:
+                print("Error: consultation '{}' is not valid".format(consultation))
+        else:
+            print("\nChconsult one of this:")
+            for c in consultations:
+                print(" - {}".format(c["name"]))
+            print()
+
+    def do_statistics(self, arg):
+        "Statistics"
+        print("Statistics")
+
     def complete_add(self, text, line, begidx, endidx):
         if len(line.split(" ")) > 2:
             list_table(self.conn, line.split(" ")[1] + "s")
@@ -126,13 +163,8 @@ class SqlShell(cmd.Cmd):
     def complete_list(self, text, line, begidx, endidx):
         return [t["name"] + "s" for t in tables if t["name"].startswith(text)]
 
-    def do_consult(self, arg):
-        "Consultations"
-        print("Consult")
-
-    def do_statistics(self, arg):
-        "Statistics"
-        print("Statistics")
+    def complete_consult(self, text, line, begidx, endidx):
+        return [c["name"] for c in consultations if c["name"].startswith(text)]
 
     def emptyline(self):
         pass
