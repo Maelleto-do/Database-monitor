@@ -27,6 +27,14 @@ consultations = [
     {"name": "players_collectors", "function": cards_bd.players_collectors},
 ]
 
+statistics = [
+    {"name": "player_nb_cards", "function": cards_bd.player_nb_cards},
+    {"name": "players_by_value", "function": cards_bd.players_by_value},
+    {"name": "cards_in_decks", "function": cards_bd.cards_in_decks},
+    {"name": "player_rare_collectors", "function": cards_bd.player_rare_collectors},
+    {"name": "cards_familly", "function": cards_bd.cards_familly},
+]
+
 host = os.environ["DB_HOST"]
 user = os.environ["DB_USER"]
 password = os.environ["DB_PASSWORD"]
@@ -36,22 +44,22 @@ db_name = os.environ["DB_NAME"]
 def sql_display(data):
     print("\n+", end="")
     for key in data[0]:
-        print("{:-^15}".format(""), end="+")
+        print("{:-^20}".format(""), end="+")
     print("\n|", end="")
     for key in data[0]:
-        print("{:^15.15}".format(key), end="|")
+        print("{:^20.20}".format(key), end="|")
     print("\n+", end="")
     for key in data[0]:
-        print("{:-^15}".format(""), end="+")
+        print("{:-^20}".format(""), end="+")
     for res in data:
         print("\n|", end="")
         for item in res.values():
             print(
-                "{:^15.15}".format(str(item) if item else "None"), end="|",
+                "{:^20.20}".format(str(item) if item else "None"), end="|",
             )
     print("\n+", end="")
     for key in data[0]:
-        print("{:-^15}".format(""), end="+")
+        print("{:-^20}".format(""), end="+")
     print("\n")
 
 
@@ -149,7 +157,25 @@ class SqlShell(cmd.Cmd):
 
     def do_statistics(self, arg):
         "Statistics"
-        print("Statistics")
+        if arg:
+            statistic = arg.split(" ")[0]
+            if statistic in [c["name"] for c in statistics]:
+                c_dict = [t for t in statistics if t["name"] == statistic][0]
+                if len(arg.split(" ")) > 1:
+                    data = c_dict["function"](self.conn, arg.split(" ")[1]).fetchall()
+                else:
+                    data = c_dict["function"](self.conn).fetchall()
+
+                if data:
+                    sql_display(data)
+
+            else:
+                print("Error: statistic '{}' is not valid".format(statistic))
+        else:
+            print("\nChconsult one of this:")
+            for c in statistics:
+                print(" - {}".format(c["name"]))
+            print()
 
     def complete_add(self, text, line, begidx, endidx):
         if len(line.split(" ")) > 2:
@@ -165,6 +191,9 @@ class SqlShell(cmd.Cmd):
 
     def complete_consult(self, text, line, begidx, endidx):
         return [c["name"] for c in consultations if c["name"].startswith(text)]
+
+    def complete_statistics(self, text, line, begidx, endidx):
+        return [s["name"] for s in statistics if s["name"].startswith(text)]
 
     def emptyline(self):
         pass
