@@ -26,6 +26,31 @@ password = os.environ["DB_PASSWORD"]
 db_name = os.environ["DB_NAME"]
 
 
+def list_table(conn, table):
+    cur = cards_bd.db_execute(conn, cards_bd.sql_src["list"][table])
+    result = cur.fetchall()
+    if result:
+        print("\n+", end="")
+        for key in result[0]:
+            print("{:-^15}".format(""), end="+")
+        print("\n|", end="")
+        for key in result[0]:
+            print("{:^15.15}".format(key), end="|")
+        print("\n+", end="")
+        for key in result[0]:
+            print("{:-^15}".format(""), end="+")
+        for res in result:
+            print("\n|", end="")
+            for item in res.values():
+                print(
+                    "{:^15.15}".format(str(item) if item else "None"), end="|",
+                )
+        print("\n+", end="")
+        for key in result[0]:
+            print("{:-^15}".format(""), end="+")
+        print("\n")
+
+
 class SqlShell(cmd.Cmd):
     """Documentation"""
 
@@ -66,7 +91,7 @@ class SqlShell(cmd.Cmd):
             table = arg.split(" ")[0]
             if table in [t["name"] for t in tables]:
                 t_dict = [t for t in tables if t["name"] == table][0]
-                t_dict["remove"](self.conn)
+                t_dict["remove"](self.conn, arg.split(" ")[1:])
             else:
                 print("Error: table '{}' is not valid".format(table))
         else:
@@ -80,29 +105,7 @@ class SqlShell(cmd.Cmd):
         if arg:
             table = arg.split(" ")[0]
             if table[:-1] in [t["name"] for t in tables]:
-                cur = cards_bd.db_execute(self.conn, cards_bd.sql_src["list"][table])
-                result = cur.fetchall()
-                if result:
-                    print("\n+", end="")
-                    for key in result[0]:
-                        print("{:-^15}".format(""), end="+")
-                    print("\n|", end="")
-                    for key in result[0]:
-                        print("{:^15.15}".format(key), end="|")
-                    print("\n+", end="")
-                    for key in result[0]:
-                        print("{:-^15}".format(""), end="+")
-                    for res in result:
-                        print("\n|", end="")
-                        for item in res.values():
-                            print(
-                                "{:^15.15}".format(str(item) if item else "None"),
-                                end="|",
-                            )
-                    print("\n+", end="")
-                    for key in result[0]:
-                        print("{:-^15}".format(""), end="+")
-                    print("\n")
+                list_table(self.conn, table)
             else:
                 print("Error: table '{}' is not valid".format(table))
         else:
@@ -110,6 +113,18 @@ class SqlShell(cmd.Cmd):
             for table in tables:
                 print(" - {}s".format(table["name"]))
             print()
+
+    def complete_add(self, text, line, begidx, endidx):
+        if len(line.split(" ")) > 2:
+            list_table(self.conn, line.split(" ")[1] + "s")
+            return [""]
+        return [t["name"] for t in tables if t["name"].startswith(text)]
+
+    def complete_remove(self, *args):
+        return self.complete_add(*args)
+
+    def complete_list(self, text, line, begidx, endidx):
+        return [t["name"] + "s" for t in tables if t["name"].startswith(text)]
 
     def do_consult(self, arg):
         "Consultations"
