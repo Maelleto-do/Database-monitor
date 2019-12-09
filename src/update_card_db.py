@@ -129,3 +129,22 @@ def remove_play(conn, id_play):
     sql_req = cards_bd.sql_src["remove"]["play"]
     cards_bd.db_execute(conn, sql_req, (id_play))
     logging.debug("Removed play '%s'", id_play)
+
+def parse_sql_file(file):
+    """Returns a list of sql statements without the final ; Only consider single line statement."""
+    data = open(file, 'r').readlines()
+    stms = []
+    for index, line in enumerate(data):
+        if not line.strip(): continue
+        if line.startswith("--"): continue
+        if ';' not in line: continue
+        stms.append(line.replace(';', '').replace('\n', '').strip())
+    return stms
+
+def populate_tables(conn, file):
+    stms = parse_sql_file(file)
+    with conn.cursor() as cursor:
+        for stm in stms:
+            cursor.execute(stm)
+        conn.commit()
+    logging.debug("Populated tables")

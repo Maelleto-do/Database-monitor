@@ -177,6 +177,16 @@ class SqlShell(cmd.Cmd):
                 print(" - {}".format(c["name"]))
             print()
 
+    def do_populate(self, arg):
+        "Populate tables"
+        if arg:
+            args = arg.split(" ")
+            for path in args:
+                update_card_db.populate_tables(self.conn, path)
+                print("Successfully loaded file {}".format(path))
+        else:
+            print("\nPlease specify a sql file to load")
+
     def complete_add(self, text, line, begidx, endidx):
         if len(line.split(" ")) > 2:
             list_table(self.conn, line.split(" ")[1] + "s")

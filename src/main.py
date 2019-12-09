@@ -10,7 +10,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def connect_db():
-
     host = os.environ["DB_HOST"]
     user = os.environ["DB_USER"]
     password = os.environ["DB_PASSWORD"]
@@ -24,7 +23,6 @@ def connect_db():
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor,
     )
-
 
 def main():
     conn = connect_db()
