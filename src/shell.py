@@ -15,7 +15,7 @@ tables = [
     {"name": "version", "add": sa.add_version, "remove": sr.remove_version},
     {"name": "possession", "add": sa.add_possession, "remove": sr.remove_possession},
     {"name": "deck", "add": sa.add_deck, "remove": sr.remove_deck},
-    {"name": "membership", "add": sa.add_, "remove": sr.remove_},
+    {"name": "membership", "add": sa.add_membership, "remove": sr.remove_},
     {"name": "game", "add": sa.add_game, "remove": sr.remove_game},
     {"name": "play", "add": sa.add_play, "remove": sr.remove_play},
 ]

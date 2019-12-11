@@ -3,6 +3,7 @@
 import yaml
 import os
 import logging
+import pymysql
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -15,9 +16,12 @@ global sql_src
 def db_execute(conn, sql, args=None):
     """Wrapper to execute a command to the database."""
     affected_rows = 0
-    with conn.cursor() as cur:
-        affected_rows = cur.execute(sql, args)
-    conn.commit()
+    try:
+        with conn.cursor() as cur:
+            affected_rows = cur.execute(sql, args)
+        conn.commit()
+    except pymysql.err.InternalError as e:
+        logging.error("Error executing sql command : " + str(e))
     return cur
 
 

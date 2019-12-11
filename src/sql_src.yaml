@@ -137,6 +137,11 @@ add:
       tournament_type,
       game_results
     ) VALUES(%s, %s, %s, %s)
+  membership: >- 
+    INSERT INTO memberships(
+      id_possession,
+      id_deck
+    ) VALUES(%s, %s)
 
 remove:
   player: >-
@@ -206,3 +211,27 @@ stats:
       cards
       group by familly
     ) as A; 
+
+triggers:
+  membership_trigger: >-
+    delimiter |
+    CREATE TRIGGER membership_tr
+    AFTER INSERT ON memberships
+    FOR EACH ROW
+    BEGIN
+      DECLARE possession_pseudo VARCHAR(64);
+      DECLARE deck_pseudo VARCHAR(64);
+      SET possession_pseudo = (SELECT pseudo FROM possessions WHERE id_possession = NEW.id_possession);
+      SET deck_pseudo = (SELECT pseudo FROM decks WHERE id_deck = NEW.id_deck);
+      IF possession_pseudo != deck_pseudo THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'ERROR POSSESSION DOES NOT BELONG TO THE PLAYER';
+      END IF;
+    END; 
+    | 
+    delimiter ;
+
+
+
+
+    

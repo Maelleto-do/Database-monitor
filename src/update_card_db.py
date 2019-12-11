@@ -40,6 +40,13 @@ def add_deck(conn, deck_name, pseudo):
     logging.debug("Added deck '%s' for pseudo '%s'", deck_name, pseudo)
 
 
+def add_membership(conn, possession_id, deck_id):
+    """Add a membership"""
+    sql_req = cards_bd.sql_src["add"]["membership"]
+    cards_bd.db_execute(conn, sql_req, (possession_id, deck_id))
+    logging.debug("Added membership for possession '%s' and deck '%s'", possession_id, deck_id)
+
+
 def remove_deck(conn, nom_deck):
     sql_req = cards_bd.sql_src["remove"]["deck"]
     cards_bd.db_execute(conn, sql_req, nom_deck)
