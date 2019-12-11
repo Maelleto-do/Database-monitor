@@ -11,7 +11,9 @@ def create_tables(conn):
     for table, sql_req in cards_bd.sql_src["create_table"].items():
         cards_bd.db_execute(conn, sql_req)
         logging.debug("'%s' table created", table)
-
+    print(cards_bd.sql_src["triggers"]["membership_trigger"])
+    cards_bd.db_execute(conn, cards_bd.sql_src["triggers"]["membership_trigger"])
+    logging.debug("Added membership table trigger")
 
 def drop_tables(conn):
     """Delete the card database"""
