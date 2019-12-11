@@ -178,7 +178,7 @@ class SqlShell(cmd.Cmd):
             print()
 
     def do_populate(self, arg):
-        "Populate tables"
+        "Populate tables with a given file or files.\nUsage 'populate file.sql [...file2.sql]' "
         if arg:
             args = arg.split(" ")
             for path in args:
