@@ -169,29 +169,30 @@ stats:
   player_nb_cards: >-
     SELECT DISTINCT pseudo, count(*) AS 'NB CARDS' FROM possessions GROUP BY pseudo;
   players_by_value: >-
-    SELECT P.pseudo, SUM((rating * P.state)) as 'TOTAL RATE' FROM
-    possessions P, versions V
-    where P.id_version = V.id_version
-    group by P.pseudo;
+    SELECT pseudo, SUM((rating * state)) as 'TOTAL RATE' FROM
+    possessions JOIN versions 
+    USING(id_version)
+    GROUP BY pseudo
+    ORDER BY 2 desc;
   cards_in_decks: >-
     SELECT D.title, count(*) as 'NB_PLAYERS' FROM
     (
      SELECT DISTINCT C.id_card, C.title, S.pseudo FROM
      versions V, (SELECT DISTINCT id_possession, id_version, D.pseudo FROM 
      possessions P, decks D 
-     where P.pseudo = D.pseudo) as S, cards C
-      where S.id_version = V.id_version
-      and C.id_card = V.id_card
+     WHERE P.pseudo = D.pseudo) as S, cards C
+      WHERE S.id_version = V.id_version
+      AND C.id_card = V.id_card
     ) as D
-    group by D.id_card; 
+    GROUP BY D.id_card
+    ORDER BY 2 DESC; 
   player_rare_collectors: >-
-    SELECT MAX(A.total) as 'maxRate' FROM 
-    (
-      SELECT P.pseudo, SUM((rating * P.state)) as 'total' FROM
-      possessions P, versions V
-      where P.id_version = V.id_version
-      group by P.pseudo
-    ) as A;
+    SELECT pseudo, COUNT(*) as 'Amount of rare cards' FROM
+    versions JOIN possessions 
+    USING(id_version)
+    WHERE print_run < 100
+    GROUP BY pseudo
+    ORDER BY 2 desc;
   cards_family: >-
     SELECT familly, 
       CASE
@@ -204,5 +205,5 @@ stats:
     (
       SELECT familly, SUM(attack) as 'attack', SUM(defense) as 'defense' FROM
       cards
-      group by familly
+      GROUP BY familly
     ) as A; 

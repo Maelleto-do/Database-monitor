@@ -30,10 +30,23 @@ class TestConsultation(unittest.TestCase):
         )
 
     def test_cards_by_type(self):
-        pass
+        cur = cards_bd.cards_by_type(self.conn, "Dark")
+        res = cur.fetchall()
+        self.assertEqual(cur.rowcount(), 3, "error in test_cards_by_type")
+        
+    def test_cards_in_possession(self):
+        cur = cards_bd.cards_by_type(self.conn, "Dark")
+        res = cur.fetchall()
+        self.assertEqual(cur.rowcount(), 12, "error in test_cards_in_possession")
 
     def test_cards_not_in_deck(self):
-        pass
+        cur = cards_bd.cards_in_possession(self.conn)
+        res = cur.fetchall()
+        self.assertEqual(cur.rowcount(), 7, "error in test_cards_not_in_deck")
+        
 
     def test_players_collectors(self):
-        pass
+        cur = cards_bd.players_collectors(self.conn)
+        res = cur.fetchall()
+        self.assertEqual(cur.rowcount(), 0, "error in test_players_collectors")
+        
