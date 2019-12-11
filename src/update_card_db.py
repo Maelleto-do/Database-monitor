@@ -11,7 +11,9 @@ def create_tables(conn):
     for table, sql_req in cards_bd.sql_src["create_table"].items():
         cards_bd.db_execute(conn, sql_req)
         logging.debug("'%s' table created", table)
-
+    print(cards_bd.sql_src["triggers"]["membership_trigger"])
+    cards_bd.db_execute(conn, cards_bd.sql_src["triggers"]["membership_trigger"])
+    logging.debug("Added membership table trigger")
 
 def drop_tables(conn):
     """Delete the card database"""
@@ -38,6 +40,13 @@ def add_deck(conn, deck_name, pseudo):
     sql_req = cards_bd.sql_src["add"]["deck"]
     cards_bd.db_execute(conn, sql_req, (deck_name, pseudo))
     logging.debug("Added deck '%s' for pseudo '%s'", deck_name, pseudo)
+
+
+def add_membership(conn, possession_id, deck_id):
+    """Add a membership"""
+    sql_req = cards_bd.sql_src["add"]["membership"]
+    cards_bd.db_execute(conn, sql_req, (possession_id, deck_id))
+    logging.debug("Added membership for possession '%s' and deck '%s'", possession_id, deck_id)
 
 
 def remove_deck(conn, nom_deck):
@@ -129,3 +138,22 @@ def remove_play(conn, id_play):
     sql_req = cards_bd.sql_src["remove"]["play"]
     cards_bd.db_execute(conn, sql_req, (id_play))
     logging.debug("Removed play '%s'", id_play)
+
+def parse_sql_file(file):
+    """Returns a list of sql statements without the final ; Only consider single line statement."""
+    data = open(file, 'r').readlines()
+    stms = []
+    for index, line in enumerate(data):
+        if not line.strip(): continue
+        if line.startswith("--"): continue
+        if ';' not in line: continue
+        stms.append(line.replace(';', '').replace('\n', '').strip())
+    return stms
+
+def populate_tables(conn, file):
+    stms = parse_sql_file(file)
+    with conn.cursor() as cursor:
+        for stm in stms:
+            cursor.execute(stm)
+        conn.commit()
+    logging.debug("Populated tables")

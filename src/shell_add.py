@@ -87,3 +87,9 @@ def add_game(conn):
     update_card_db.add_game(
         conn, game_date, game_location, tournament_type, game_results
     )
+
+
+def add_membership(conn):
+    id_possession = shell_input("Possession id (Required): ", True)
+    id_deck = shell_input("Deck id (Required): ", True)
+    update_card_db.add_membership(conn, id_possession, id_deck)
